@@ -1,3 +1,9 @@
 # Who's Hungry API Server
 
-Adding a line for the activity 3
+To start the server, you will probably need to set up a virtual environment.
+
+Once installed, run the server with the command below:
+
+```bash
+$ make local
+```
