@@ -1,0 +1,15 @@
+import React, { Component } from 'react';
+import './App.css';
+
+class NavBar extends Component {
+  render() {
+    return (
+      <div className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h2>Welcome to React</h2>
+      </div>
+    );
+  }
+}
+
+export default NavBar;
