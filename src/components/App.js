@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
+import Navbar from './NavBar';
 import Sidebar from './Sidebar';
 import RecipeView from './RecipeView';
-import '../App.css';
-
+import './bootstrap-navbar-menu/layout-2/assets/bootstrap/css/bootstrap.min.css';
 class App extends Component {
   render() {
     return (
