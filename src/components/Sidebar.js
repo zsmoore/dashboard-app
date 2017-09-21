@@ -5,47 +5,37 @@ import Title from 'grommet/components/Title';
 import Search from 'grommet/components/Search';
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
-
+import Button from 'grommet/components/Button';
 import CheckBox from 'grommet/components/CheckBox';
-
+import CloseIcon from 'grommet/components/icons/base/Close';
+import Box from 'grommet/components/Box';
 
 class Sidebar extends Component {
-  
-  constructor(props) {
-    super(props);
-    this.state = { 
-      library: ['ing 1', 'search 2', '3rd ingredient'],
-      inventory: ['Ingredient 1', 'Ingredient 2', 'Ingredient 3']
-    }
-    this._select = this._select.bind(this);
-  }
-  
-  _select(suggestion, selected) {
-    console.log(`selection ${suggestion}`);
-    console.log(`selected ${selected}`);
-    if(selected) {
-      const { library, inventory} = this.state;
-      const i = library.indexOf(suggestion);
-      if (i >= 0) {
-        library.splice(i,1);
-        inventory.unshift(suggestion);
-      } 
-      this.setState({ library, inventory });
-    }
-  }
 
   render() {
-    const { library, inventory} = this.state;
+    const { library, inventory, selected, select, add, findRecipes, remove } = this.props;
+    const listItems = inventory.map((ing, i) => (
+      <ListItem key={i} pad='none'>
+        <Box style={{ width: '85%' }}>
+          <CheckBox label={ing}
+            checked={selected.indexOf(ing) >= 0} onChange={() => select(ing)}
+          />
+        </Box>
+        <Button box={true} justify='end' icon={<CloseIcon size='xsmall'/>}
+          onClick={() => remove(i)}
+        />
+      </ListItem>
+    ));
     return (
       <GrommetSidebar size='small' separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
           inline={true} suggestions={library}
-          onSelect={({ suggestion }, selected) => this._select(suggestion, selected)}
+          onSelect={({ suggestion }, selected) => add(suggestion, selected)}
         />
-        <List>
-          {inventory.map((ing, i) => <ListItem key={i}><CheckBox/>{ing}</ListItem>)}
-        </List>
+        <Button label='Find Recipes' onClick={() => findRecipes()}/>
+        <List>{ listItems }</List>
+        <Button label='Remove Selected Ingredients' onClick={() => remove(-1)}/>
       </GrommetSidebar>
     );
   }
