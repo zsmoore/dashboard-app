@@ -78,10 +78,11 @@ class App extends Component {
     console.log(this.state);
     return (
       <GrommetApp centered={false}>
-        <Header>
+        <Navbar />
+        {/*<Header>
           <Image size='small' src={logo} />
           <Headline>Welcome to React with Grommet</Headline>
-        </Header>
+        </Header>*/}
         <Article direction='row'>
           <Sidebar 
             inventory={inventory} library={library} selected={selected} select={this._select} 
