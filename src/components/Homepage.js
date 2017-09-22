@@ -10,8 +10,8 @@ class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      library: ['ing 1', 'search 2', '3rd ingredient'],
-      inventory: ['Ingredient 1', 'Ingredient 2', 'Ingredient 3'],
+      library: ['Broccoli', 'Caviar', 'Curry', 'Steak', 'Chicken', 'Mozzarella'],
+      inventory: ['Steak', 'Chicken', 'Mozzarella'],
       selected: [],
     }
     this._add = this._add.bind(this);
@@ -25,7 +25,6 @@ class Homepage extends Component {
       const { library, inventory} = this.state;
       const i = library.indexOf(suggestion);
       if (i >= 0) {
-        library.splice(i,1);
         inventory.unshift(suggestion);
       } 
       this.setState({ library, inventory });

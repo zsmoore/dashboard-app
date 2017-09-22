@@ -14,6 +14,12 @@ class Sidebar extends Component {
 
   render() {
     const { library, inventory, selected, select, add, findRecipes, remove } = this.props;
+    const suggestions = [];
+    library.forEach((food) => {
+      if(inventory.indexOf(food) < 0){
+        suggestions.push(food);
+      }
+    });
     const listItems = inventory.map((ing, i) => (
       <ListItem key={i} pad='none'>
         <Box style={{ width: '85%' }}>
@@ -30,7 +36,7 @@ class Sidebar extends Component {
       <GrommetSidebar fixed={true} size='small' separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
-          inline={true} suggestions={library}
+          inline={true} suggestions={suggestions}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}
         />
         <Button label='Find Recipes' onClick={() => findRecipes()}/>
