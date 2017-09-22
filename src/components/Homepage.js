@@ -63,11 +63,6 @@ class Homepage extends Component {
         link: 'http://www.taste.com.au/recipes/butter-chicken-13/b0f6220e-65e9-48b3-b4d8-c1b88949c5db',
         picture: 'http://img.taste.com.au/XsMVNAFm/w720-h480-cfill-q80/taste/2016/11/butter-chicken-101831-1.jpeg'
       });
-      recipes.push({name: 'Chicken Alfredo', label:'HARD',
-        description: 'Outstanding.  I will never use store-baught sauce again!',
-        link: 'http://www.delish.com/cooking/recipe-ideas/recipes/a53695/one-pot-chicken-alfredo-recipe/',
-        picture: 'http://del.h-cdn.co/assets/17/24/980x490/landscape-1497458683-delish-one-pot-chicken-alfredo-1-1024.jpg'
-      });
     }
     if (selected.indexOf('Mozzarella') >= 0) {
       recipes.push({name: 'Mozzarella Sticks', label:'EASY',
@@ -80,13 +75,8 @@ class Homepage extends Component {
         link: '"We love this pizza as a starter. Great flavours."',
         picture: 'http://img.taste.com.au/WCevy9kv/w720-h480-cfill-q80/taste/2016/11/pizza-bianca-75328-1.jpeg'
       });
-      recipes.push({name: 'Chicken Alfredo', label:'HARD',
-        description: 'Outstanding.  I will never use store-baught sauce again!',
-        link: 'http://www.delish.com/cooking/recipe-ideas/recipes/a53695/one-pot-chicken-alfredo-recipe/',
-        picture: 'http://del.h-cdn.co/assets/17/24/980x490/landscape-1497458683-delish-one-pot-chicken-alfredo-1-1024.jpg'
-      });
     }
-    if (selected.indexOf('Parmesian') >= 0 || selected.indexOf('Fettuccine') >= 0 || selected.indexOf('Broccoli') >= 0) {
+    if (selected.indexOf('Mozzarella') >= 0 || selected.indexOf('Chicken') >= 0 || selected.indexOf('Parmesian') >= 0 || selected.indexOf('Fettuccine') >= 0 || selected.indexOf('Broccoli') >= 0) {
       recipes.push({name: 'Chicken Alfredo', label:'HARD',
         description: 'Outstanding.  I will never use store-baught sauce again!',
         link: 'http://www.delish.com/cooking/recipe-ideas/recipes/a53695/one-pot-chicken-alfredo-recipe/',
