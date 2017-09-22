@@ -23,7 +23,7 @@ class App extends Component {
     this.state = { 
       library: ['ing 1', 'search 2', '3rd ingredient'],
       inventory: ['Ingredient 1', 'Ingredient 2', 'Ingredient 3'],
-      selected: []
+      selected: [],
     }
     this._add = this._add.bind(this);
     this._findRecipes = this._findRecipes.bind(this);
@@ -74,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    const { inventory, library, selected } = this.state;
+    const { inventory, library, selected} = this.state;
     console.log(this.state);
     return (
       <GrommetApp centered={false}>
