@@ -33,7 +33,7 @@ class Sidebar extends Component {
       </ListItem>
     ));
     return (
-      <GrommetSidebar fixed={true} size='small' separator='all'>
+      <GrommetSidebar size='small' separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
           inline={true} suggestions={suggestions}
