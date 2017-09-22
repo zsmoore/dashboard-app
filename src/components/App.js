@@ -15,7 +15,6 @@ import Image from 'grommet/components/Image';
 import Section from 'grommet/components/Section';
 
 import logo from '../logo.svg';
-
 class App extends Component {
 
   constructor(props) {
