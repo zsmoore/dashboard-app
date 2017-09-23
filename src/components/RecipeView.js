@@ -15,7 +15,7 @@ class RecipeView extends Component {
 	const { recipes } = this.props;
     return (
 	  <Box>
-		<Tiles selectable={true}>
+		<Tiles selectable={true} flush = {false}>
 		  {recipes.map((recipe, i) => (
 		    <Tile key={i} onClick={() => this.openRecipe(recipe.link)} >
 			  <Card thumbnail={recipe.picture}
