@@ -43,7 +43,9 @@ class Sidebar extends Component {
         <List>
           {getListItems(inventory, selected, select, remove)}
         </List>
-        <Button label='Find Recipes' onClick={() => findRecipes()}/>
+        <Box align='center' pad='small' margin='small'>
+        	<Button label='Find Recipes' onClick={() => findRecipes()} primary='true'/>
+        </Box>
       </GrommetSidebar>
     );
   }
