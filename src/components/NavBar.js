@@ -13,7 +13,7 @@ class Navbar extends Component {
     return (
       <Header>
 				<Box pad='small'>
-					<Headline margin='none'>Who's Hungry?</Headline>
+					<Headline margin='small'>Who's Hungry?</Headline>
 				</Box>
 				<Box flex={true} justify='end' direction='row' responsive={false}>
 					<Menu icon={<MenuIcon />} dropAlign={{"right": "right"}}>
