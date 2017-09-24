@@ -1,3 +1,43 @@
+## Who's Hungry?
+
+### Getting Started
+These instructions will get you a copy of the project up and running on your local machine.
+
+#### Prerequisites
+Download and install [Node.js]. This will give you npm. 
+[Node.js]: https://nodejs.org/en/
+
+#### Installing
+In your terminal, run
+```
+git clone https://github.com/Whos-Hungry/dashboard-app.git
+```
+
+This will clone the project into your local directory.
+
+Enter the dashboard-app folder and run
+```
+npm install
+```
+to install the dependencies.
+
+#### Running
+Run the command
+```
+npm start
+```
+
+This will launch the webapp in your local browser.
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Used for Who's Hungry CSE 442 project.
