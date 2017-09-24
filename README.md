@@ -4,8 +4,7 @@
 These instructions will get you a copy of the project up and running on your local machine.
 
 #### Prerequisites
-Download and install [Node.js]. This will give you npm. 
-[Node.js]: https://nodejs.org/en/
+Download and install [Node.js](https://nodejs.org/en/). This will give you npm. 
 
 #### Installing
 In your terminal, run
