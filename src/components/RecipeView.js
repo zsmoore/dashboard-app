@@ -14,7 +14,7 @@ class RecipeView extends Component {
   render() {
 	const { recipes } = this.props;
     return (
-			<Box className='recipe--view'>
+			<Box className='recipe--view' full='horizontal'>
 				<Tiles selectable={false} flush={false}>
 					{recipes.map((recipe, i) => (
 						<Tile className='recipe--view--tile' key={i} 

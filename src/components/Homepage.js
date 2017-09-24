@@ -3,7 +3,6 @@ import Sidebar from './Sidebar';
 import RecipeView from './RecipeView';
 import Navbar from './NavBar';
 import Article from 'grommet/components/Article';
-import Split from 'grommet/components/Split';
 import Box from 'grommet/components/Box';
 
 class Homepage extends Component {
