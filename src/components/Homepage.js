@@ -4,6 +4,7 @@ import RecipeView from './RecipeView';
 import Navbar from './NavBar';
 import Article from 'grommet/components/Article';
 import Split from 'grommet/components/Split';
+import Box from 'grommet/components/Box';
 
 class Homepage extends Component {
 
@@ -115,13 +116,13 @@ class Homepage extends Component {
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
         <Navbar />
-        <Split direction='column' priority='right' fixed={true} flex='right'>
+        <Box flex={true} direction='row' responsive={false}>
           <Sidebar 
             inventory={inventory} library={library} selected={selected} select={this._select} 
             add={this._add} findRecipes={this._findRecipes} remove={this._remove}
           />
-          <RecipeView recipes={recipes} />
-        </Split>
+            <RecipeView recipes={recipes} />
+        </Box>
       </Article>
     );
   }

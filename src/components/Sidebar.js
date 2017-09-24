@@ -33,7 +33,7 @@ class Sidebar extends Component {
       </ListItem>
     ));
     return (
-      <GrommetSidebar size='small' separator='all'>
+      <Box style={{width:'20%'}} separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
           inline={true} suggestions={suggestions}
@@ -42,7 +42,7 @@ class Sidebar extends Component {
         <Button label='Find Recipes' onClick={() => findRecipes()}/>
         <List>{ listItems }</List>
         <Button label='Remove Selected Ingredients' onClick={() => remove(-1)}/>
-      </GrommetSidebar>
+      </Box>
     );
   }
 }

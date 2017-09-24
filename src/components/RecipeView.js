@@ -6,7 +6,7 @@ import Card from 'grommet/components/Card';
 import Box from 'grommet/components/Box';
 
 class RecipeView extends Component {
-	
+
 	openRecipe(URL) {
 		window.open(URL);
 	}
@@ -14,19 +14,21 @@ class RecipeView extends Component {
   render() {
 	const { recipes } = this.props;
     return (
-	  <Box>
-		<Tiles selectable={true} flush = {false}>
-		  {recipes.map((recipe, i) => (
-		    <Tile key={i} onClick={() => this.openRecipe(recipe.link)} >
-			  <Card thumbnail={recipe.picture}
-				heading={recipe.name}
-				label={recipe.label}
-				description={recipe.description}
-			  />
-			</Tile>
-		  ))}
-	  </Tiles>
-	  </Box>
+			<Box className='recipe--view'>
+				<Tiles selectable={false} flush={false}>
+					{recipes.map((recipe, i) => (
+						<Tile className='recipe--view--tile' key={i} 
+					 	  onClick={() => this.openRecipe(recipe.link)}
+						>
+							<Card thumbnail={recipe.picture}
+								heading={recipe.name}
+								label={recipe.label}
+								description={recipe.description}
+							/>
+					</Tile>
+					))}
+				</Tiles>
+			</Box>
     );
   }
 }
