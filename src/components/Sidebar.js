@@ -10,32 +10,42 @@ import CheckBox from 'grommet/components/CheckBox';
 import CloseIcon from 'grommet/components/icons/base/Close';
 import Box from 'grommet/components/Box';
 
-class Sidebar extends Component {
+function getListItems(inventory, selected, select, remove) {
+  return inventory.map((ing, i) => (
+    <ListItem key={i} pad='none'>
+      <Box style={{ width: '85%' }}>
+        <CheckBox
+          label={ing} checked={selected.indexOf(ing) >= 0} onChange={() => select(ing)}
+        />
+      </Box>
+      <Button box={true} justify='end' icon={<CloseIcon size='xsmall'/>}
+        onClick={() => remove(i)}
+      />
+    </ListItem>
+  ));
+}
 
+function getSuggestions(library, inventory) {
+  return library.filter(food => inventory.indexOf(food) < 0);
+}
+
+class Sidebar extends Component {
+  
   render() {
     const { library, inventory, selected, select, add, findRecipes, remove } = this.props;
-    const listItems = inventory.map((ing, i) => (
-      <ListItem key={i} pad='none'>
-        <Box style={{ width: '85%' }}>
-          <CheckBox label={ing}
-            checked={selected.indexOf(ing) >= 0} onChange={() => select(ing)}
-          />
-        </Box>
-        <Button box={true} justify='end' icon={<CloseIcon size='xsmall'/>}
-          onClick={() => remove(i)}
-        />
-      </ListItem>
-    ));
     return (
       <GrommetSidebar size='small' separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
-          inline={true} suggestions={library}
+          inline={true} suggestions={getSuggestions(library, inventory)}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}
         />
-        <Button label='Find Recipes' onClick={() => findRecipes()}/>
-        <List>{ listItems }</List>
-        <Button label='Remove Selected Ingredients' onClick={() => remove(-1)}/>
+        <List>
+          {getListItems(inventory, selected, select, remove)}
+        </List>
+        <Box align='center' pad='small' margin='small'>
+        	<Button label='Find Recipes' onClick={() => findRecipes()} primary='true'/>
+        </Box>
       </GrommetSidebar>
     );
   }
