@@ -8,7 +8,6 @@ import Anchor from 'grommet/components/Anchor';
 import Headline from 'grommet/components/Headline';
 import Title from  'grommet/components/Headline';
 
-
 class Navbar extends Component {
   render() {
     return (

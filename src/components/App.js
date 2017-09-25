@@ -9,7 +9,6 @@ import RecipeView from './RecipeView';
 import Homepage from './Homepage';
 
 import GrommetApp from 'grommet/components/App';
-
 class App extends Component {
   
   render() {
