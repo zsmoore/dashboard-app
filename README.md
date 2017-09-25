@@ -1,7 +1,11 @@
 ## Who's Hungry?
 
+#### This app is hosted on http://app.whoshungry.io/ or you can run it locally using the following instructions.
+
+
 ### Getting Started
-These instructions are for Windows and Mac users. They will get you a copy of the project up and running on your local machine.
+These instructions are for Windows and Mac users. They will get you a copy of the project up and running on your local machine
+
 
 #### Prerequisites
 Download and install Node.js
