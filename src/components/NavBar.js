@@ -6,15 +6,14 @@ import MenuIcon from 'grommet/components/icons/base/Menu';
 import Menu from 'grommet/components/Menu';
 import Anchor from 'grommet/components/Anchor';
 import Headline from 'grommet/components/Headline';
-import Title from  'grommet/components/Headline';
 
 class Navbar extends Component {
   render() {
     return (
       <Header>
-				<Box pad='small'><Headline margin='none' tag='h3'>
-					Who's Hungry?
-				</Headline></Box>
+				<Box pad='small'>
+					<Headline margin='small'>Who's Hungry?</Headline>
+				</Box>
 				<Box flex={true} justify='end' direction='row' responsive={false}>
 					<Menu icon={<MenuIcon />} dropAlign={{"right": "right"}}>
 						<Anchor href='#' className='active'>

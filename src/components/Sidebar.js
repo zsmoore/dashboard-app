@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import GrommetSidebar from 'grommet/components/Sidebar';
 import Title from 'grommet/components/Title';
 import Search from 'grommet/components/Search';
 import List from 'grommet/components/List';
@@ -34,7 +33,7 @@ class Sidebar extends Component {
   render() {
     const { library, inventory, selected, select, add, findRecipes, remove } = this.props;
     return (
-      <GrommetSidebar size='small' separator='all'>
+      <Box style={{width:'20%'}} separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
           inline={true} suggestions={getSuggestions(library, inventory)}
@@ -44,9 +43,9 @@ class Sidebar extends Component {
           {getListItems(inventory, selected, select, remove)}
         </List>
         <Box align='center' pad='small' margin='small'>
-        	<Button label='Find Recipes' onClick={() => findRecipes()} primary='true'/>
+        	<Button label='Find Recipes' onClick={() => findRecipes()} primary={true} />
         </Box>
-      </GrommetSidebar>
+      </Box>  
     );
   }
 }
