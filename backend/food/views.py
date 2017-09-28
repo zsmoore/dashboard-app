@@ -16,6 +16,8 @@ def search(request):
 
     if len(items.get('ingredient', [])) > 0:
         params = key + "&q=" + ",".join(items["ingredient"])
+    else:
+        params = key
 
     url = "http://food2fork.com/api/search%s" % params 
 
