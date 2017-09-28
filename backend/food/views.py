@@ -24,7 +24,7 @@ def search(request):
     req = urllib.request.Request(url=url,data=b'None',headers={'User-Agent':' Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0'})
 
     f = urllib.request.urlopen(req)
-    data = json.loads(f.read())
+    data = json.loads(f.read().decode("utf-8"))
 
     return JsonResponse(data)
 
