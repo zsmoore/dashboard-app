@@ -16,7 +16,7 @@ test:
 .PHONY: debug
 debug: cleandocker
 	docker-compose build
-	docker-compose run --rm -e DEBUG=true backend /bin/wait-for-it.sh postgres-service:5432 -- /bin/start-debug.sh 
+	docker-compose run --service-ports --rm -e DEBUG=true backend /bin/wait-for-it.sh postgres-service:5432 -- /bin/start-debug.sh 
 
 .PHONY: cleandocker
 cleandocker:

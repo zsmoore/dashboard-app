@@ -23,12 +23,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'owx=zc_q7b_xv+orn51!bvjww+t!06e-cw3m**6f9&7%&5f8rv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "true").lower() != "false"
 
-ALLOWED_HOSTS = []
+DOCKER = os.getenv("DOCKER", "afadsgdagsdg").lower() == 'true' 
+
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
+FOOD2FORK_KEY = "3f39daf4dacbdd464f0b33e09b82d18b"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,11 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'oauth2_provider',
     'rest_framework',
 
     # Custom apps
     'session',
+    'food',
 ]
 
 MIDDLEWARE = [
@@ -78,12 +84,24 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DOCKER:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'qtbsxAIUe',
+            'USER': 'ZbPDqDa',
+            'PASSWORD': 'mKPegDYBFpsqbWlq',
+            'HOST': 'postgres-service',
+            'PORT': '',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

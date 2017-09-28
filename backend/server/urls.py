@@ -18,6 +18,7 @@ from django.contrib import admin
 from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
+    url(r'^food/', include('food.urls', namespace='food')),
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', obtain_jwt_token),
 ]
