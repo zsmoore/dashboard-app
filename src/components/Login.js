@@ -23,13 +23,14 @@ class Login extends Component {
 
   render() {
     return (
-      <Layer closer={true} onClose={() => console.log('TODO')}>
-      	<LoginForm
-  			title='Hungry Already?'
-  			forgotPassword={<Anchor href='#'
-  			label='Forgot password?' />}
-  			rememberMe={true} />
-      </Layer>
+    	<Layer closer={true} onClose={() => console.log('TODO')}>
+      		<LoginForm 
+	      		onSubmit={() => console.log('Trying')}
+	  			title='Hungry Already?'
+	  			forgotPassword={<Anchor href='#'
+	  			label='Forgot password?' />}
+	  			rememberMe={true} />
+      	</Layer>
     );
   }
 }
