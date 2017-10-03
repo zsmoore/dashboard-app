@@ -24,20 +24,20 @@ function getListItems(inventory, selected, select, remove) {
   ));
 }
 
-function getSuggestions(library, inventory) {
-  return library.filter(food => inventory.indexOf(food) < 0);
-}
-
 class Sidebar extends Component {
   
   render() {
-    const { library, inventory, selected, select, add, findRecipes, remove } = this.props;
+    const { 
+      inventory, selected, select, add, search,
+      findRecipes, remove, getSuggestions, suggestions
+    } = this.props;
     return (
       <Box style={{width:'20%'}} separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
-          inline={true} suggestions={getSuggestions(library, inventory)}
+          inline={true} suggestions={suggestions} value={search}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}
+          onDOMChange={(event) => getSuggestions(event)}
         />
         <List>
           {getListItems(inventory, selected, select, remove)}

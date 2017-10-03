@@ -18,11 +18,13 @@ class Homepage extends Component {
     this.state = {
       library: ['Broccoli', 'Parmesan', 'Fettuccine', 'Steak', 'Chicken', 'Mozzarella'],
       inventory: ['Steak', 'Chicken', 'Mozzarella'],
-      selected: [],
+      selected: [], 
+      search: ''
     };
     this._add = this._add.bind(this);
-    this._select = this._select.bind(this);
+    this._getSuggestions = this._getSuggestions.bind(this);
     this._remove = this._remove.bind(this);
+    this._select = this._select.bind(this);
   }
 
   componentWillMount() {
@@ -30,14 +32,14 @@ class Homepage extends Component {
   }
 
   _add(suggestion, selected) {
-    if (selected) {
-      const { library, inventory} = this.state;
-      const i = library.indexOf(suggestion);
-      if (i >= 0) {
-        inventory.unshift(suggestion);
-      } 
-      this.setState({ library, inventory });
-    }
+    const { inventory, search } = this.state;
+    if (!selected && (search.length === 0 ||
+      inventory.filter(food => food.toLowerCase() === search.toLowerCase()).length > 0
+    )) return;
+    const val = selected ? suggestion :
+      `${search.charAt(0).toUpperCase()}${search.substring(1).toLowerCase()}`;
+    inventory.unshift(val); 
+    this.setState({ search: '', suggestions: [], inventory });
   }
 
   _select(ingredient) {
@@ -52,31 +54,37 @@ class Homepage extends Component {
   }
 
   _remove(index) {
-    const { inventory, selected } = this.state;
-    if (index < 0) {
-      selected.forEach(ingredient => {
-        const i = inventory.indexOf(ingredient);
-        if (i >= 0) inventory.splice(i, 1);
+    const { inventory } = this.state;
+    inventory.splice(index, 1);
+    this.setState({ inventory });
+  }
+
+  _getSuggestions(event) {
+    const search = event.target.value;
+    let suggestions = [];
+    if (search.length > 3) {
+      const { library, inventory } = this.state;
+      // this.props.getSuggestions(inventory, search);
+      suggestions = library.filter(food => {
+        return search.toLowerCase() === food.substring(0, search.length).toLowerCase()
+          && inventory.indexOf(food) < 0;
       });
-      this.setState({ inventory, selected: [] });
     }
-    else {
-      inventory.splice(index, 1);
-      this.setState({ inventory });
-    }
+    this.setState({ search, suggestions });
   }
 
   render() {
-    const { inventory, library, selected } = this.state;
-    const { findRecipes, data: { recipes } } = this.props;
-    console.log(this.props);
+    const { inventory, library, selected, suggestions, search } = this.state;
+    let { recipes } = this.props.data;
+    if (!recipes) recipes = [];
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
         <Navbar />
         <Box flex={true} direction='row' responsive={false}>
-          <Sidebar 
+          <Sidebar
+            search={search} suggestions={suggestions} getSuggestions={this._getSuggestions}
             inventory={inventory} library={library} selected={selected} select={this._select} 
-            add={this._add} findRecipes={findRecipes} remove={this._remove}
+            add={this._add} findRecipes={this.props.findRecipes} remove={this._remove}
           />
           <RecipeView recipes={recipes} />
         </Box>
@@ -86,20 +94,16 @@ class Homepage extends Component {
 }
 
 Homepage.propTypes = {
-  recipes: PropTypes.array,
+  data: PropTypes.shape({
+    recipes: PropTypes.array
+  }),  
   findRecipes: PropTypes.func.isRequired
 }
 
-function mapStateToProps(state) {
-  return {
-    data: state
-  }
-}
+const mapStateToProps = state => ({ data: state });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    findRecipes: selected => dispatch(findRecipes(selected))
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  findRecipes: selected => dispatch(findRecipes(selected))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

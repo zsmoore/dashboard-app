@@ -1,7 +1,6 @@
-import store from '../store'; 
+import { GET_RECIPES } from './';
 
 export function findRecipes(selected) {
-  console.log('finding')
   const recipes = selected.length > 0 ? [] : [{ name: 'Mac n\' Cheese', label:'EASY',
     description: '"Best mac n\' cheese I\'ve ever tasted"',
     link: 'https://thecountrycontessa.com/baked-macaroni-cheese/',
@@ -48,5 +47,5 @@ export function findRecipes(selected) {
       picture: 'http://del.h-cdn.co/assets/17/24/980x490/landscape-1497458683-delish-one-pot-chicken-alfredo-1-1024.jpg'
     });
   }
-  return { type: 'GET_RECIPES', payload: { recipes } };
+  return { type: GET_RECIPES, payload: { recipes } };
 }
