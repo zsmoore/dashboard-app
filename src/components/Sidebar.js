@@ -43,7 +43,7 @@ class Sidebar extends Component {
           {getListItems(inventory, selected, select, remove)}
         </List>
         <Box align='center' pad='small' margin='small'>
-        	<Button label='Find Recipes' onClick={() => findRecipes()} primary={true} />
+        	<Button label='Find Recipes' onClick={() => findRecipes(selected)} primary={true} />
         </Box>
       </Box>  
     );

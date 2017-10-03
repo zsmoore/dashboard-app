@@ -13,6 +13,7 @@ class RecipeView extends Component {
 	
   render() {
 	const { recipes } = this.props;
+	console.log('rerender');
     return (
 			<Box className='recipe--view' full='horizontal'>
 				<Tiles selectable={false} flush={false}>
