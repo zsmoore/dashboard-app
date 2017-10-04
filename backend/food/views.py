@@ -5,6 +5,8 @@ from urllib.parse import urlencode
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from django.conf import settings
 
@@ -27,8 +29,3 @@ def search(request):
     data = json.loads(f.read().decode("utf-8"))
 
     return JsonResponse(data)
-
-
-@login_required
-def save_recipe(request):
-    pass
