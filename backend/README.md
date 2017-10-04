@@ -2,45 +2,6 @@
 
 This is the backend API server to handle Who's Hungry requests.
 
-## API Documentation
-
-### User/Profile Actions
-
-#### `/session/create-user`
-
-Takes a `POST` request with potential new user information 
-
-*Data Type:* `"application/json"`
-
-*Data Values:*
-* `username`: String representing the username.
-* `email`: String representing the email.
-* `password`: String representing the password. 
-
-*Returns*
-* `response`: Either `ok` or `error` based on if the request worked/was valid.
-* `message`: Message depicting what happened, whether good or bad.
-
-### Token Actions
-
-#### `/api-token-auth/`
-
-Takes a `POST` request with user information and returns a JWT Token to authenticate against.
-
-*Data Type:* `"application/json"`
-
-*Data Values:*
-* `username`: String representing the username.
-* `password`: String representing the password. 
-
-*Returns*
-`non_field_errors`: In the case of an invalid request, this is a list of errors that occurred.
-
-
-
-### Food Actions
-
-
 ## API Development
 
 Follow the steps below to start developing on the API server.
