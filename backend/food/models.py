@@ -22,6 +22,7 @@ class Recipe(models.Model):
         FoodItem,
         through='Ingredient',
         through_fields=('recipe', 'food_item'),
+        related_name="recipes"
     )
 
     class Meta:
@@ -33,8 +34,6 @@ class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-
-    amount = models.IntegerField(default=1)
 
     description = models.CharField(max_length=256, default="")
 
