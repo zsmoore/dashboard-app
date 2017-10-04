@@ -1,9 +1,14 @@
 from django.db import models
 
+class FoodItem(models.Model):
+
+    name = models.CharField(max_length=256, default="")
+
+    class Meta:
+        db_table = "food_tbl"
+
 
 class Recipe(models.Model):
-
-    f2f_url = models.CharField(max_length=256, default="")
 
     title = models.CharField(max_length=256, default="")
 
@@ -13,5 +18,27 @@ class Recipe(models.Model):
 
     image_url = models.CharField(max_length=512, default="")
 
+    ingredients = models.ManyToManyField(
+        FoodItem,
+        through='Ingredient',
+        through_fields=('recipe', 'food_item'),
+    )
+
     class Meta:
         db_table = "recipe_tbl"
+
+
+class Ingredient(models.Model):
+
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+
+    amount = models.IntegerField(default=1)
+
+    description = models.CharField(max_length=256, default="")
+
+    class Meta:
+        db_table = "ingredient_tbl"
+
+
