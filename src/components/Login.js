@@ -4,6 +4,7 @@ import LoginForm from 'grommet/components/LoginForm';
 import Layer from 'grommet/components/Layer';
 import Anchor from 'grommet/components/Anchor';
 import Button from 'grommet/components/Button';
+import Box from 'grommet/components/Box';
 
 
 class Login extends Component {
@@ -27,9 +28,11 @@ class Login extends Component {
       		<LoginForm 
 	      		onSubmit={() => console.log('Trying')}
 	  			title='Hungry Already?'
-	  			forgotPassword={<Anchor href='#'
-	  			label='Forgot password?' />}
+	  			forgotPassword={<Anchor href='#' label='Forgot password?' />}
 	  			rememberMe={true} />
+	  			<Box pad={{horizontal: 'medium', vertical: 'small'}}>
+	  				<Anchor href='#' label='Sign up' />
+	  			</Box>
       	</Layer>
     );
   }
