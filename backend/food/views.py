@@ -29,32 +29,3 @@ def search(request):
     data = json.loads(f.read().decode("utf-8"))
 
     return JsonResponse(data)
-
-
-@api_view(['POST'])
-@permission_classes((IsAuthenticated,))
-def save_recipe(request):
-
-    if request.method == 'POST':
-
-        body = request.body
-        if not isinstance(body, str):
-            body = body.decode('utf-8')
-
-        data = json.loads(body)
-
-        if 'recipeId' not in data:
-            return JsonResponse({"response": "error", "message": "recipeId required!"})
-
-        params = "?key=%s&rId=" % (settings.FOOD2FORK_KEY, data['recipeId'])
-
-        url = 'http://food2fork.com/api/get' % params 
-
-        req = urllib.request.Request(url=url,data=b'None',headers={'User-Agent':' Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0'})
-
-        f = urllib.request.urlopen(req)
-        resp = json.loads(f.read().decode("utf-8"))
-
-        return JsonResponse({"response": "ok", "message": "Successfully saved recipe!"})
-
-    return JsonResponse({"response": "error", "message": "Something went wrong saving recipe!"})
