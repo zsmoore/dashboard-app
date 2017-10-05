@@ -30,7 +30,6 @@ class Navbar extends Component {
   	} else if(showComponent === 'signup'){
   		popup = <Signup signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
   	}
-  	console.log(showComponent);
     return (
     	<Header>
 			<Box pad='small'>
