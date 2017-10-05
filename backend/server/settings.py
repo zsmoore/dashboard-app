@@ -30,7 +30,7 @@ DOCKER = os.getenv("DOCKER", "afadsgdagsdg").lower() == 'true'
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = ['api.whoshungry.com', '104.131.48.250']
+    ALLOWED_HOSTS = ['api.whoshungry.io', '104.131.48.250']
 
 
 # Application definition
