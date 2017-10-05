@@ -3,35 +3,19 @@ import '../App.css';
 import LoginForm from 'grommet/components/LoginForm';
 import Layer from 'grommet/components/Layer';
 import Anchor from 'grommet/components/Anchor';
-import Button from 'grommet/components/Button';
 import Box from 'grommet/components/Box';
 
-
 class Login extends Component {
-	constructor(props) {
-	    super(props);
-	    this.state = {
-	    	showComponent: false,
-	    };
-	    this._onButtonClick = this._onButtonClick.bind(this);
-	}
-
-	_onButtonClick() {
-		this.setState({
-	    	showComponent: true,
-		});
-  }
 
   render() {
     return (
-    	<Layer closer={true} onClose={() => console.log('TODO')}>
+    	<Layer closer={true} onClose={() => this.props.onButtonClick('')}>
       		<LoginForm 
-	      		onSubmit={() => console.log('Trying')}
+	      		onSubmit={({ username, password }) => this.props.login(username, password)}
 	  			title='Hungry Already?'
-	  			forgotPassword={<Anchor href='#' label='Forgot password?' />}
-	  			rememberMe={true} />
+	  		/>
 	  			<Box pad={{horizontal: 'medium', vertical: 'small'}}>
-	  				<Anchor href='#' label='Sign up' />
+	  				<Anchor href='#' label='Sign up' onClick={() => this.props.onButtonClick('signup')}/>
 	  			</Box>
       	</Layer>
     );

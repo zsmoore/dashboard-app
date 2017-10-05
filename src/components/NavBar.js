@@ -2,29 +2,35 @@ import React, { Component } from 'react';
 import '../App.css';
 import Header from 'grommet/components/Header';
 import Box from 'grommet/components/Box';
-import MenuIcon from 'grommet/components/icons/base/Menu';
-import Menu from 'grommet/components/Menu';
-import Anchor from 'grommet/components/Anchor';
 import Headline from 'grommet/components/Headline';
 import Login from './Login';
+import Signup from './Signup';
 import Button from 'grommet/components/Button';
 
 class Navbar extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	    	showComponent: false,
+	    	showComponent: '',
 	    };
 	    this._onButtonClick = this._onButtonClick.bind(this);
 	}
 
-	_onButtonClick() {
+	_onButtonClick(value) {
 		this.setState({
-	    	showComponent: true,
+	    	showComponent: value
 		});
   }
 
   render() {
+  	const { showComponent } = this.state;
+  	let popup = '';
+  	if(showComponent === 'login'){
+  		popup = <Login login={this.props.login} onButtonClick={this._onButtonClick}/>;
+  	} else if(showComponent === 'signup'){
+  		popup = <Signup signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
+  	}
+  	console.log(showComponent);
     return (
     	<Header>
 			<Box pad='small'>
@@ -33,14 +39,14 @@ class Navbar extends Component {
 			<Box flex={true} justify='end' direction='row' responsive={false}>
 				<Box pad='medium'>
 					<Button label='Log In'
-						onClick={this._onButtonClick}
+						onClick={() => this._onButtonClick('login')}
   						href='#'
   						primary={true}
   						accent={false}
   						critical={false}
  						plain={false} />
   				</Box>
-  				{this.state.showComponent ? <Login /> : null}
+  				{popup}
 			</Box>
 		</Header>
     );

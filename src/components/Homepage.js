@@ -27,10 +27,20 @@ class Homepage extends Component {
         picture: 'http://img.sndimg.com/food/image/upload/w_966,h_483,c_fill,fl_progressive,q_92/v1/img/recipes/11/62/66/picBeJt2K.jpg'
       }]
     };
+    this._login = this._login.bind(this);
+    this._signup = this._signup.bind(this);
     this._add = this._add.bind(this);
     this._findRecipes = this._findRecipes.bind(this);
     this._select = this._select.bind(this);
     this._remove = this._remove.bind(this);
+  }
+
+  _login(username, password) {
+    console.log('loggin in.', username, password);
+  }
+
+  _signup(username, password) {
+    console.log('signin in.', username, password);
   }
 
   _add(suggestion, selected) {
@@ -114,7 +124,7 @@ class Homepage extends Component {
     const { inventory, library, selected, recipes } = this.state;
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
-        <Navbar />
+        <Navbar login={this._login} signup={this._signup}/>
         <Box flex={true} direction='row' responsive={false}>
           <Sidebar 
             inventory={inventory} library={library} selected={selected} select={this._select} 
