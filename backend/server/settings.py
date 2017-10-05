@@ -88,9 +88,9 @@ if DOCKER or not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'qtbsxAIUe',
-            'USER': 'ZbPDqDa',
-            'PASSWORD': 'mKPegDYBFpsqbWlq',
+            'NAME': 'hungry',
+            'USER': 'hungry',
+            'PASSWORD': 'feedmesemore',
             'HOST': 'postgres-service' if DOCKER else 'localhost',
             'PORT': '',
         }
