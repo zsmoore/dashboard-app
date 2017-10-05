@@ -22,6 +22,7 @@ class Recipe(models.Model):
         FoodItem,
         through='Ingredient',
         through_fields=('recipe', 'food_item'),
+        related_name="recipes"
     )
 
     class Meta:

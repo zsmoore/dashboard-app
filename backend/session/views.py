@@ -23,8 +23,10 @@ def create_user(request):
     if User.objects.filter(email=data["email"]).exists():
         return Response({"message": "User already exists!", "response": "error"})
 
+    print(data)
+
     # Create user
-    user = User.objects.create(email=data["email"], username=data["username"], password=data["password"])
+    user = User.objects.create_user(email=data["email"], username=data["username"], password=data["password"])
     user.save()
 
     serializer = serializers.UserSerializer(user)

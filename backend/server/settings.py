@@ -30,7 +30,7 @@ DOCKER = os.getenv("DOCKER", "afadsgdagsdg").lower() == 'true'
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['api.whoshungry.io', '104.131.48.250']
 
 
 # Application definition
@@ -84,14 +84,14 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-if DOCKER:
+if DOCKER or not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'qtbsxAIUe',
-            'USER': 'ZbPDqDa',
-            'PASSWORD': 'mKPegDYBFpsqbWlq',
-            'HOST': 'postgres-service',
+            'NAME': 'hungry',
+            'USER': 'hungry',
+            'PASSWORD': 'feedmesemore',
+            'HOST': 'postgres-service' if DOCKER else 'localhost',
             'PORT': '',
         }
     }
@@ -156,3 +156,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
