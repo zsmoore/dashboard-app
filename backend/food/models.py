@@ -33,7 +33,7 @@ class Ingredient(models.Model):
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
-    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE,null=True)
 
     description = models.CharField(max_length=256, default="")
 

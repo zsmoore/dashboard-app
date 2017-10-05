@@ -44,6 +44,7 @@ class Command(BaseCommand):
                 recipeImageUrl = obj['recipe']['image_url']
                 recipeId = obj['recipe']['recipe_id']
                 recipeUrl = obj['recipe']['source_url']
+                print(recipeId)
                 recipeObj = Recipe.objects.create(title=recipeTitle,source=recipeUrl,recipe_id=recipeId,image_url=recipeImageUrl)
                 print("Created recipe: "+recipeTitle)
 
@@ -91,7 +92,7 @@ class Command(BaseCommand):
                     i = i.lower()
 
                     # Add
-                    ingredient = Ingredient.objects.create(recipe=recipe,description=original)
+                    ingredient = Ingredient.objects.create(recipe=recipeObj,description=original)
                     if len(i)>0:
                         item = FoodItem.objects.filter(name=i).first()
                         if not item:
