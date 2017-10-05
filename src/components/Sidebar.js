@@ -31,13 +31,13 @@ class Sidebar extends Component {
       inventory, selected, select, add, search,
       findRecipes, remove, getSuggestions, suggestions
     } = this.props;
-    //onDOMChange={(event) => getSuggestions(event)}
     return (
       <Box style={{width:'20%'}} separator='all'>
         <Title align='center'>Ingredients</Title>
         <Search
           inline={true} suggestions={suggestions} value={search}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}
+          onDOMChange={(event) => getSuggestions(event)}
         />
         <List>
           {getListItems(inventory, selected, select, remove)}

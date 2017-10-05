@@ -1,5 +1,14 @@
 import { GET_RECIPES, GET_USER } from './';
 
+export function update(user, inventory) {
+  user.inventory = inventory;
+  return { type: GET_USER, payload: { user } };
+} 
+
+export function signup(user) {
+  return { type: GET_USER, payload: { user } };
+}
+
 export function logout(username, password) {
   const user = undefined;
   return { type: GET_USER, payload: { user } };

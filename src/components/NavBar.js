@@ -6,6 +6,7 @@ import Headline from 'grommet/components/Headline';
 import Login from './Login';
 import Signup from './Signup';
 import Button from 'grommet/components/Button';
+import Label from 'grommet/components/Label';
 
 class Navbar extends Component {
 	constructor(props) {
@@ -33,15 +34,24 @@ class Navbar extends Component {
   		popup = <Login login={this.props.login} onButtonClick={this._onButtonClick}/>;
   	} else if(showComponent === 'signup'){
   		popup = <Signup signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
-  	}
-  	const label = user ? 'Log Out' : 'Log In';
-  	const value = user ? '' : 'login';
+	}
+	let label, value, greeting;  
+	if(user) {
+		label = 'Log Out';
+		value = '';
+		greeting = <Label>Hello, {user.username}</Label>;
+	} else {
+		label = 'Log In';
+		value = 'login';
+		greeting = '';
+	}
     return (
     	<Header>
 			<Box pad='small'>
 				<Headline margin='small'>Who's Hungry?</Headline>
 			</Box>
 			<Box flex={true} justify='end' direction='row' responsive={false}>
+				{greeting}
 				<Box pad='medium'>
 					<Button label={label}
 						onClick={() => this._onButtonClick(value, label === 'Log Out', false )}

@@ -29,6 +29,7 @@ class Signup extends Component {
 		const { email, password, verify } = this.state;
 		if(password === verify){
 			this.props.signup(email, password);
+			this.props.onButtonClick('')
 		} else {
 			this.setState({ message: 'Passwords don\'t match.' })
 		}
