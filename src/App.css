@@ -152,6 +152,15 @@ a {
     color: #fed136;
     background-color: white; }
 
+.recipe--view {
+  overflow-y: scroll;
+}
+
+.recipe--view--tile:hover {
+  background-color: #B4B1B1; 
+}
+
+
 
 
 
@@ -187,14 +196,6 @@ a {
 
 .App-intro {
   font-size: large;
-}
-
-.recipe--view {
-  overflow-y: scroll;
-}
-
-.recipe--view--tile:hover {
-  background-color: #B4B1B1; 
 }
 
 @keyframes App-logo-spin {
