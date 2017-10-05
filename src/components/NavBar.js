@@ -16,20 +16,26 @@ class Navbar extends Component {
 	    this._onButtonClick = this._onButtonClick.bind(this);
 	}
 
-	_onButtonClick(value) {
+	_onButtonClick(value, type, change) {
 		this.setState({
-	    	showComponent: value
+	   		showComponent: value
 		});
-  }
+		if (type) {
+			this.props.logout();
+		}
+  	}
 
   render() {
   	const { showComponent } = this.state;
+  	const { user } = this.props; 
   	let popup = '';
-  	if(showComponent === 'login'){
+  	if (showComponent === 'login'){
   		popup = <Login login={this.props.login} onButtonClick={this._onButtonClick}/>;
   	} else if(showComponent === 'signup'){
   		popup = <Signup signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
   	}
+  	const label = user ? 'Log Out' : 'Log In';
+  	const value = user ? '' : 'login';
     return (
     	<Header>
 			<Box pad='small'>
@@ -37,8 +43,8 @@ class Navbar extends Component {
 			</Box>
 			<Box flex={true} justify='end' direction='row' responsive={false}>
 				<Box pad='medium'>
-					<Button label='Log In'
-						onClick={() => this._onButtonClick('login')}
+					<Button label={label}
+						onClick={() => this._onButtonClick(value, label === 'Log Out', false )}
   						href='#'
   						primary={true}
   						accent={false}

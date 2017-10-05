@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import Sidebar from './Sidebar';
 import RecipeView from './RecipeView';
 import Navbar from './NavBar';
-
 import Article from 'grommet/components/Article';
 import Box from 'grommet/components/Box';
-
-import { findRecipes } from '../actions/homepage';
+import { findRecipes, login, logout } from '../actions/homepage';
 
 class Homepage extends Component {
 
@@ -17,7 +14,7 @@ class Homepage extends Component {
     super(props);
     this.state = {
       library: ['Broccoli', 'Parmesan', 'Fettuccine', 'Steak', 'Chicken', 'Mozzarella'],
-      inventory: ['Steak', 'Chicken', 'Mozzarella'],
+      inventory: [],
       selected: [], 
       search: ''
     };
@@ -33,8 +30,17 @@ class Homepage extends Component {
     this.props.findRecipes([]);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.data && nextProps.data.user) {
+      this.setState({ inventory: nextProps.data.user.inventory})
+    } else if (this.props.data && this.props.data.user) {
+      this.setState({ inventory: []});
+    }
+  }
+
   _login(username, password) {
     console.log('loggin in.', username, password);
+    this.props.login(username, password);
   }
 
   _signup(username, password) {
@@ -85,11 +91,11 @@ class Homepage extends Component {
 
   render() {
     const { inventory, library, selected, suggestions, search } = this.state;
-    let { recipes } = this.props.data;
+    let { recipes, user } = this.props.data;
     if (!recipes) recipes = [];
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
-        <Navbar login={this._login} signup={this._signup}/>
+        <Navbar user={user} login={this.props.login} logout={this.props.logout} signup={this._signup}/>
         <Box flex={true} direction='row' responsive={false}>
           <Sidebar
             search={search} suggestions={suggestions} getSuggestions={this._getSuggestions}
@@ -113,7 +119,9 @@ Homepage.propTypes = {
 const mapStateToProps = state => ({ data: state });
 
 const mapDispatchToProps = dispatch => ({
-  findRecipes: selected => dispatch(findRecipes(selected))
+  findRecipes: selected => dispatch(findRecipes(selected)),
+  login: (username, password) => dispatch(login(username,password)),
+  logout: () => dispatch(logout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
