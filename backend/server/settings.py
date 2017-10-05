@@ -30,7 +30,7 @@ DOCKER = os.getenv("DOCKER", "afadsgdagsdg").lower() == 'true'
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['api.whoshungry.com', '104.131.48.250']
 
 
 # Application definition
@@ -91,7 +91,7 @@ if DOCKER:
             'NAME': 'qtbsxAIUe',
             'USER': 'ZbPDqDa',
             'PASSWORD': 'mKPegDYBFpsqbWlq',
-            'HOST': 'postgres-service',
+            'HOST': 'postgres-service' if DOCKER else 'localhost',
             'PORT': '',
         }
     }
@@ -156,3 +156,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
