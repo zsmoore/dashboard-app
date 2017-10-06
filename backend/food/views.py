@@ -16,6 +16,8 @@ from food import serializers
 def search(request):
     items = dict(request.GET)
 
+    data = {}
+
     return JsonResponse(data)
 
 
