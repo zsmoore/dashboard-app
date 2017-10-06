@@ -2,7 +2,7 @@ from django.db import models
 
 class FoodItem(models.Model):
 
-    name = models.CharField(max_length=256, default="")
+    name = models.CharField(max_length=256, default="", unique=True, db_index=True)
 
     class Meta:
         db_table = "food_tbl"
@@ -10,7 +10,7 @@ class FoodItem(models.Model):
 
 class Recipe(models.Model):
 
-    title = models.CharField(max_length=256, default="")
+    title = models.CharField(max_length=256, default="", db_index=True)
 
     source = models.CharField(max_length=256, default="")
 
@@ -33,9 +33,7 @@ class Ingredient(models.Model):
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
-    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-
-    amount = models.IntegerField(default=1)
+    food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE,null=True)
 
     description = models.CharField(max_length=256, default="")
 
