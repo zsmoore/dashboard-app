@@ -32,7 +32,7 @@ class Homepage extends Component {
   }
 
   _login(username, password) {
-    this.setState({ selected: [] });
+    this.setState({ selected: [], inventory: [] });
     this.props.login(username, password);
   }
 
@@ -48,17 +48,15 @@ class Homepage extends Component {
 
   _add(suggestion, selected) {
     const { search } = this.state;
-    const { data } = this.props;
-    const inventory = data.user ? data.user.inventory : this.state.inventory;
-    console.log(this.props);
+    const { user } = this.props.data
+    const inventory = user ? user.inventory : this.state.inventory;
     if (!selected && (search.length === 0 ||
       inventory.filter(food => food.toLowerCase() === search.toLowerCase()).length > 0
     )) return;
     const val = selected ? suggestion :
       `${search.charAt(0).toUpperCase()}${search.substring(1).toLowerCase()}`;
-    inventory.unshift(val); 
-    console.log(data.user);
-    if (data.user) this.props.update(data.user, inventory);
+    inventory.unshift(val);
+    if (user) this.props.update(user, inventory);
     else this.setState({ search: '', suggestions: [], inventory });
   }
 
@@ -74,10 +72,10 @@ class Homepage extends Component {
   }
 
   _remove(index) {
-    const { data } = this.props;
-    const inventory = data.user ? data.user.inventory : this.state.inventory;
+    const { data: { user } } = this.props;
+    const inventory = user ? user.inventory : this.state.inventory;
     inventory.splice(index, 1);
-    if (data.user) this.props.update(data.user, inventory);
+    if (user) this.props.update(user, inventory);
     else this.setState({ inventory });
   }
 
@@ -100,7 +98,7 @@ class Homepage extends Component {
     let { recipes, user } = this.props.data;
     const inventory = user ? user.inventory : this.state.inventory;
     if (!recipes) recipes = [];
-    console.log(this.state);
+    console.log(inventory, user);
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
         <Navbar user={user} login={this._login} logout={this._logout} signup={this._signup}/>

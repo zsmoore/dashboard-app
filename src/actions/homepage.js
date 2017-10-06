@@ -1,7 +1,7 @@
 import { GET_RECIPES, GET_USER } from './';
 
-export function update(user, inventory) {
-  user.inventory = inventory;
+export function update(u, inventory) {
+  const user = Object.assign({}, u, inventory);
   return { type: GET_USER, payload: { user } };
 } 
 
