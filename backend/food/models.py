@@ -1,11 +1,15 @@
 from django.db import models
 
+
 class FoodItem(models.Model):
 
     name = models.CharField(max_length=256, default="", unique=True, db_index=True)
 
     class Meta:
         db_table = "food_tbl"
+
+    def __str__(self):
+        return self.name.title()
 
 
 class Recipe(models.Model):
@@ -28,6 +32,9 @@ class Recipe(models.Model):
     class Meta:
         db_table = "recipe_tbl"
 
+    def __str__(self):
+        return self.title.title()
+
 
 class Ingredient(models.Model):
 
@@ -39,5 +46,8 @@ class Ingredient(models.Model):
 
     class Meta:
         db_table = "ingredient_tbl"
+
+    def __str__(self):
+        return "<Ingredient: %s>" % self.description.title()
 
 

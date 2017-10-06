@@ -15,10 +15,12 @@ class RecipeAdmin(admin.ModelAdmin):
 @admin.register(FoodItem)
 class FoodItemAdmin(admin.ModelAdmin):
 
-    list_display = ('name',)
+    search_fields = ('name', 'id')
+    list_display = ('name', 'id')
 
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
 
-    list_display = ('description', )
+    list_display = ('description', 'food_item', 'recipe')
+    
