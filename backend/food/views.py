@@ -1,4 +1,5 @@
 import json
+import random
 import urllib.request
 from urllib.parse import urlencode
 
@@ -17,17 +18,28 @@ def search(request):
     items = dict(request.GET)
 
     if 'ingredient' not in items:
-        return JsonResponse({'response': 'ok', 'message': "Must have GET parameter 'ingredient'."})
+        count = Recipe.objects.count()
+
+        ids = random.sample(range(1, count), min(count - 1, 20))
+
+        recipes = Recipe.objects.filter(id__in=ids).all()
+
+        serializer = serializers.RecipeSerializer(recipes, many=True)
+
+        data = {'response': 'ok', 'recipes': serializer.data}
+
+        return JsonResponse(data)
+
     
     try:
         item_ids = [int(i) for i in items['ingredient']]
 
         ingredients = Ingredient.objects.filter(food_item__id__in=item_ids).values_list('recipe_id', flat=True)
 
+        recipes = Recipe.objects.filter(ingredients__in=ingredients).all()
+
     except ValueError:
         return JsonResponse({'response': 'error', 'message': 'Ingredients must be of type integer!'})
-
-    recipes = Recipe.objects.filter(ingredients__in=ingredients).all()
 
     serializer = serializers.RecipeSerializer(recipes, many=True)
 

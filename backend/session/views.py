@@ -31,4 +31,4 @@ def create_user(request):
 
     serializer = serializers.UserSerializer(user)
 
-    return Response({"message": "User created!", "data": serializer.data})
+    return Response({'response': 'ok', "message": "User created!", "data": serializer.data})
