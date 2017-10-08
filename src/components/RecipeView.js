@@ -17,15 +17,11 @@ class RecipeView extends Component {
 		<Box className='recipe--view' full='horizontal'>
 			<Tiles selectable={false} flush={false}>
 				{recipes.map((recipe, i) => (
-					<Tile className='recipe--view--tile' key={i} 
-				 	  onClick={() => this.openRecipe(recipe.link)}
+					<Tile className='recipe--view--tile' key={i} size='small'
+					  onClick={() => this.openRecipe(recipe.source)}
 					>
-						<Card thumbnail={recipe.picture}
-							heading={recipe.name}
-							label={recipe.label}
-							description={recipe.description}
-						/>
-				</Tile>
+						<Card thumbnail={recipe.image_url} textSize='small' label={recipe.title} />
+				  </Tile>
 				))}
 			</Tiles>
 		</Box>

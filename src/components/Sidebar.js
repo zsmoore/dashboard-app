@@ -8,13 +8,15 @@ import Button from 'grommet/components/Button';
 import CheckBox from 'grommet/components/CheckBox';
 import CloseIcon from 'grommet/components/icons/base/Close';
 import Box from 'grommet/components/Box';
+import Footer from 'grommet/components/Footer';
+import Header from 'grommet/components/Header';
 
 function getListItems(inventory, selected, select, remove) {
   return inventory.map((ing, i) => (
     <ListItem key={i} pad='none'>
       <Box style={{ width: '85%' }}>
         <CheckBox
-          label={ing} checked={selected.indexOf(ing) >= 0} onChange={() => select(ing)}
+          label={ing.name} checked={selected.indexOf(ing) >= 0} onChange={() => select(ing)}
         />
       </Box>
       <Button box={true} justify='end' icon={<CloseIcon size='xsmall'/>}
@@ -33,18 +35,20 @@ class Sidebar extends Component {
     } = this.props;
     return (
       <Box style={{width:'20%'}} separator='all'>
-        <Title align='center'>Ingredients</Title>
+        <Header size='small'><Title align='center'>Ingredients</Title></Header>
         <Search
-          inline={true} suggestions={suggestions} value={search}
+          inline={true} suggestions={suggestions.map(food => food.name)}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}
-          onDOMChange={(event) => getSuggestions(event)}
+          onDOMChange={(event) => getSuggestions(event)} value={search}
         />
-        <List>
-          {getListItems(inventory, selected, select, remove)}
-        </List>
-        <Box align='center' pad='small' margin='small'>
-        	<Button label='Find Recipes' onClick={() => findRecipes(selected)} primary={true} />
+        <Box>
+          <List>
+            {getListItems(inventory, selected, select, remove)}
+          </List>
         </Box>
+        <Footer  align='center' pad='small' margin='small'>
+          <Button label='Find Recipes' onClick={() => findRecipes(selected)} primary={true} />
+        </Footer>
       </Box>  
     );
   }
