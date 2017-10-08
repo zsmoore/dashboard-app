@@ -6,7 +6,7 @@ import RecipeView from './RecipeView';
 import Navbar from './NavBar';
 import Article from 'grommet/components/Article';
 import Box from 'grommet/components/Box';
-import { findRecipes, login, logout, signup, update } from '../actions/homepage';
+import { findRecipes, login, logout, signup, update, getSuggestions } from '../actions/homepage';
 
 class Homepage extends Component {
 
@@ -15,8 +15,7 @@ class Homepage extends Component {
     this.state = {
       library: ['Broccoli', 'Parmesan', 'Fettuccine', 'Steak', 'Chicken', 'Mozzarella'],
       inventory: [],
-      selected: [], 
-      search: ''
+      selected: []
     };
     this._login = this._login.bind(this);
     this._logout = this._logout.bind(this);
@@ -80,8 +79,10 @@ class Homepage extends Component {
   }
 
   _getSuggestions(event) {
+    const { user } = this.props.data;
+    const inventory = user ? user.inventory : this.state.inventory;
     const search = event.target.value;
-    let suggestions = [];
+    this.props.getSuggestions(inventory, search, search.length > 3);
     /*if (search.length > 3) {
       const { library, inventory } = this.state;
       // this.props.getSuggestions(inventory, search);
@@ -90,21 +91,20 @@ class Homepage extends Component {
           && inventory.indexOf(food) < 0;
       });
     }*/
-    this.setState({ search, suggestions });
+    //this.setState({ search, suggestions });
   }
 
   render() {
-    const { library, selected, suggestions, search } = this.state;
-    let { recipes, user } = this.props.data;
+    const { library, selected } = this.state;
+    let { recipes, user, search, suggestions } = this.props.data;
     const inventory = user ? user.inventory : this.state.inventory;
     if (!recipes) recipes = [];
-    console.log(inventory, user);
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
         <Navbar user={user} login={this._login} logout={this._logout} signup={this._signup}/>
         <Box flex={true} direction='row' responsive={false}>
           <Sidebar
-            search={search} suggestions={suggestions} getSuggestions={this._getSuggestions}
+            search={search || ''} suggestions={suggestions || []} getSuggestions={this._getSuggestions}
             inventory={inventory} library={library} selected={selected} select={this._select} 
             add={this._add} findRecipes={this.props.findRecipes} remove={this._remove}
           />
@@ -133,7 +133,8 @@ const mapDispatchToProps = dispatch => ({
   login: (username, password) => dispatch(login(username,password)),
   logout: () => dispatch(logout()),
   signup: (username, password, inventory) => dispatch(signup(username, password, inventory)),
-  update: inventory => dispatch(update(inventory))
+  update: inventory => dispatch(update(inventory)),
+  getSuggestions: (inventory, search, suggest) => dispatch(getSuggestions(inventory, search, suggest))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

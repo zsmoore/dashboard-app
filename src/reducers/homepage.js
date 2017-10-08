@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_USER } from '../actions'
+import { GET_RECIPES, GET_USER, GET_SUGGESTIONS } from '../actions'
 
 const homepage = (state = {}, action) => {
   switch (action.type) {
@@ -9,7 +9,12 @@ const homepage = (state = {}, action) => {
     case GET_USER:
       return Object.assign({}, { ...state,
         user: action.payload.user
-      }); 
+      });
+    case GET_SUGGESTIONS:
+      return Object.assign({}, { ...state,
+        suggestions: action.payload.suggestions,
+        search: action.payload.search
+      });
     default:
       return state
     }

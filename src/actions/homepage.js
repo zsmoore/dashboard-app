@@ -1,4 +1,20 @@
-import { GET_RECIPES, GET_USER } from './';
+import { GET_RECIPES, GET_USER, GET_SUGGESTIONS } from './';
+import { hitApi } from '../api'; 
+
+export function getSuggestions(inventory, search, suggest) {
+  if (suggest) {
+    const url = `https://api.whoshungry.io/food/autocomplete?partial=${search}`;
+    const options = JSON.stringify({ method: 'GET' }); 
+    return dispatch => hitApi(url, options).then((payload) => {
+      payload.suggestions = payload.suggestions.filter(food => {
+        return search.toLowerCase() === food.substring(0, search.length).toLowerCase()
+          && inventory.indexOf(food) < 0;
+      });
+      dispatch({ type: GET_SUGGESTIONS, payload });
+    });  
+  } 
+  return { type: GET_SUGGESTIONS, payload: { suggestions: [], search } };
+}
 
 export function update(u, inventory) {
   const user = Object.assign({}, u, inventory);
@@ -14,12 +30,13 @@ export function logout(username, password) {
   return { type: GET_USER, payload: { user } };
 }
 
-export function login(username, password) {
+export function login(username, password) {  
   const user = { username, password, inventory: ['Steak', 'Chicken', 'Mozzarella'] };
   return { type: GET_USER, payload: { user } };
 }
 
 export function findRecipes(selected) {
+  const url = `https://api.whoshungry.io/food/search?ingredient=3&ingredient=5`;
   const recipes = selected.length > 0 ? [] : [{ name: 'Mac n\' Cheese', label:'EASY',
     description: '"Best mac n\' cheese I\'ve ever tasted"',
     link: 'https://thecountrycontessa.com/baked-macaroni-cheese/',
