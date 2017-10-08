@@ -39,9 +39,10 @@ class Homepage extends Component {
     this.props.logout();
   }
 
-  _signup(username, password) {
+  _signup(email, password) {
     const { inventory } = this.state;
-    this.props.signup({ username, password, inventory });
+    const username = email.substring(email.indexOf(0, '@'));
+    this.props.signup({ username, password, email });
   }
 
   _add(suggestion, selected) {

@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, UPDATE_SEARCH } from '../actions'
+import { GET_RECIPES, GET_USER, GET_SUGGESTIONS } from '../actions'
 
 const homepage = (state = {}, action) => {
   switch (action.type) {

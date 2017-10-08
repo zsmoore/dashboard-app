@@ -7,7 +7,6 @@ export function getSuggestions(inventory, search) {
     const options = JSON.stringify({ method: 'GET' }); 
     return dispatch => hitApi(url, options).then((payload) => {
       payload.search = search;
-      console.log(payload.items.map(f => inventory.findIndex(fo => fo.name === f.name)));
       payload.suggestions = payload.items.filter(food => {
         return search.toLowerCase() === food.name.substring(0, search.length).toLowerCase()
           && inventory.findIndex(f => f.name === food.name) < 0;
@@ -24,12 +23,16 @@ export function update(u, inventory) {
 } 
 
 export function signup(user) {
-  return { type: GET_USER, payload: { user } };
+  const url = 'https://api.whoshungry.io/session/create-user'
+  const options = JSON.stringify({ method: 'POST', data: user }); 
+  return dispatch => hitApi(url, options).then((payload) => {
+    console.log(payload);
+    dispatch({ type: GET_USER, payload: { user } });
+  });
 }
 
 export function logout(username, password) {
-  const user = undefined;
-  return { type: GET_USER, payload: { user } };
+  return { type: GET_USER, payload: { user: undefined } };
 }
 
 export function login(username, password) {  
@@ -43,7 +46,6 @@ export function findRecipes(selected) {
     const ingredientString = selected.map(food => `ingredient=${food.id}`).join('&');
     url = `https://api.whoshungry.io/food/search?${ingredientString}`;
   } else url = 'https://api.whoshungry.io/food/search';
-  console.log(url);
   const options = JSON.stringify({ method: 'GET' }); 
   return dispatch => hitApi(url, options).then((payload) => {
     dispatch({ type: GET_RECIPES, payload });

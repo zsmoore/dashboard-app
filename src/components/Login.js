@@ -8,11 +8,12 @@ import Box from 'grommet/components/Box';
 class Login extends Component {
 
   constructor(props) {
-  	super(props);
+		super(props);
   	this._submit = this._submit.bind(this);
   }
 
   _submit(username, password) {
+		if(!username || !password) return;
   	this.props.onButtonClick('', true);
   	this.props.login(username, password);
   }
@@ -20,9 +21,9 @@ class Login extends Component {
   render() {
     return (
     	<Layer closer={true} onClose={() => this.props.onButtonClick('')}>
-      		<LoginForm 
-	      		onSubmit={({ username, password }) => this._submit(username, password)}
-	  			title='Hungry Already?'
+      	<LoginForm 
+	        onSubmit={({ username, password }) => this._submit(username, password)}
+	  			title='Hungry Already?' // errors={this.props.user.errors}
 	  		/>
 	  		<Box pad={{horizontal: 'medium', vertical: 'small'}}>
 	  			<Anchor href='#' label='Sign up' onClick={() => this.props.onButtonClick('signup')}/>

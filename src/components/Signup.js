@@ -27,11 +27,13 @@ class Signup extends Component {
 
 	_signup() {
 		const { email, password, verify } = this.state;
-		if(password === verify){
-			this.props.signup(email, password);
-			this.props.onButtonClick('')
+		if(!email || !password || !verify) this.setState({ message: 'Not all fields were filled out.' }); 
+		else if(email.indexOf('@') < 0) this.setState({ message: 'Invalid email provided.' });
+		else if(password !== verify){
+			this.setState({ message: 'Passwords don\'t match.' });
 		} else {
-			this.setState({ message: 'Passwords don\'t match.' })
+			this.props.signup(email, password);
+			this.props.onButtonClick('');
 		}
 	}
 
