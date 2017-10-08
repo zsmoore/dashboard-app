@@ -4,6 +4,7 @@ import Tiles from 'grommet/components/Tiles';
 import Tile from 'grommet/components/Tile';
 import Card from 'grommet/components/Card';
 import Box from 'grommet/components/Box';
+import Label from 'grommet/components/Label';
 
 class RecipeView extends Component {
 
@@ -20,7 +21,7 @@ class RecipeView extends Component {
 					<Tile className='recipe--view--tile' key={i} size='small'
 					  onClick={() => this.openRecipe(recipe.source)}
 					>
-						<Card thumbnail={recipe.image_url} textSize='small' label={recipe.title} />
+						<Card thumbnail={recipe.image_url} textSize='small' label={<Label size='small'>{recipe.title}</Label>} />
 				  </Tile>
 				))}
 			</Tiles>

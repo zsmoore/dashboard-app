@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import '../App.css';
 import Header from 'grommet/components/Header';
 import Box from 'grommet/components/Box';
-import Headline from 'grommet/components/Headline';
+import Heading from 'grommet/components/Heading';
 import Login from './Login';
 import Signup from './Signup';
 import Button from 'grommet/components/Button';
 import Label from 'grommet/components/Label';
+import MenuIcon from 'grommet/components/icons/base/Menu';
+import Menu from 'grommet/components/Menu';
 
 class Navbar extends Component {
   
@@ -42,22 +44,26 @@ class Navbar extends Component {
 	  value = 'login';
 	  greeting = '';
 	}
-    return (
-      <Header>
-		<Box pad='small'>
-	      <Headline margin='small'>Who's Hungry?</Headline>
-		</Box>
-		<Box flex={true} justify='end' direction='row' responsive={false}>
-		  {greeting}
-		<Box pad='medium'>
-		<Button label={label}
-		  onClick={() => this._onButtonClick(value, label === 'Log Out', false )}
-  		  primary={true} accent={false} critical={false} plain={false}
+
+	const button = (
+		<Button label={label} style={{ backgroundColor: 'white', color: '#865CD6' }}
+			onClick={() => this._onButtonClick(value, label === 'Log Out', false )}
 		/>
-  		</Box>
-  		  {popup}
-		</Box>
-	  </Header>
+	);
+
+    return (
+      <Header size='small' separator='bottom' style={{ backgroundColor: '#865CD6' }}>
+				<Box pad={{ horizontal: 'medium' }}>
+						<Heading style={{ fontSize: '60', color: 'white' }} margin='small'>Who's Hungry?</Heading>
+				</Box>
+				<Box flex={true} justify='end' direction='row' responsive={false}>
+				{greeting}
+				<Box pad={{ horizontal: 'medium' }}>
+					<Menu style={{ borderRadius: '5px' }} icon={<MenuIcon />} colorIndex='light-1' />
+				</Box>
+					{popup}
+				</Box>
+			</Header>
     );
   }
 }

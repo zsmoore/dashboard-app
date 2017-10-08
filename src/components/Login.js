@@ -14,8 +14,8 @@ class Login extends Component {
 
   _submit(username, password) {
 		if(!username || !password) return;
-  	this.props.onButtonClick('', true);
-  	this.props.login(username, password);
+		this.props.login(username, password);
+		this.props.onButtonClick('', true);
   }
 
   render() {

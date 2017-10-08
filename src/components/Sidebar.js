@@ -34,7 +34,7 @@ class Sidebar extends Component {
       findRecipes, remove, getSuggestions, suggestions
     } = this.props;
     return (
-      <Box style={{width:'20%'}} separator='all'>
+      <Box style={{ width: '20%' }} separator='right'>
         <Header size='small'><Title align='center'>Ingredients</Title></Header>
         <Search
           inline={true} suggestions={suggestions.map(food => food.name)}
