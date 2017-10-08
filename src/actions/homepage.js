@@ -1,4 +1,23 @@
-import { GET_RECIPES } from './';
+import { GET_RECIPES, GET_USER } from './';
+
+export function update(u, inventory) {
+  const user = Object.assign({}, u, inventory);
+  return { type: GET_USER, payload: { user } };
+} 
+
+export function signup(user) {
+  return { type: GET_USER, payload: { user } };
+}
+
+export function logout(username, password) {
+  const user = undefined;
+  return { type: GET_USER, payload: { user } };
+}
+
+export function login(username, password) {
+  const user = { username, password, inventory: ['Steak', 'Chicken', 'Mozzarella'] };
+  return { type: GET_USER, payload: { user } };
+}
 
 export function findRecipes(selected) {
   const recipes = selected.length > 0 ? [] : [{ name: 'Mac n\' Cheese', label:'EASY',
