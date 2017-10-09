@@ -35,7 +35,7 @@ class Sidebar extends Component {
     } = this.props;
     return (
       <Box style={{ width: '20%' }} separator='right'>
-        <Header size='small'><Title align='center'>Ingredients</Title></Header>
+        <Header justify='center' size='small'><Title>Ingredients</Title></Header>
         <Search
           inline={true} suggestions={suggestions.map(food => food.name)}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}
@@ -46,7 +46,7 @@ class Sidebar extends Component {
             {getListItems(inventory, selected, select, remove)}
           </List>
         </Box>
-        <Footer  align='center' pad='small' margin='small'>
+        <Footer justify='center' pad='small' >
           <Button style={{ backgroundColor: '#FDC92B', borderColor: '#FDC92B'}} label='Find Recipes' onClick={() => findRecipes(selected)} primary={true} />
         </Footer>
       </Box>  

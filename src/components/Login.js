@@ -57,7 +57,7 @@ class Login extends Component {
               />
             </FormField>
         </Form>
-        <Label>{message}</Label>
+        <Label style={{ color: 'red' }}>{message}</Label>
         <Box pad='medium' align='center' width='100%'>
           <Button label='Log In' style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white' }}
             primary={true} onClick={() => this._submit(email, password)}

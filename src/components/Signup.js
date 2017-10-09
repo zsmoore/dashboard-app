@@ -39,8 +39,9 @@ class Signup extends Component {
 
   render() {
   	const { email, password, verify, message } = this.state;
+  	// closer={true} onClose={() => this.props.onButtonClick('')
     return (
-    	<Layer closer={true} onClose={() => this.props.onButtonClick('')}>
+    	<Layer>
       		<Box pad='medium'>
       			<Heading strong={true} align='center'>Create an account!</Heading>
 	      		<Form>
@@ -64,7 +65,7 @@ class Signup extends Component {
             			/>
 	    			</FormField>
 				</Form>
-				<Label>{message}</Label>
+				<Label style={{ color: 'red' }}>{message}</Label>
 				<Box pad='medium' align='center' width='100%'>
 					<Button label='Sign Up' style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white' }}
 						primary={true} onClick={() => this._signup()}

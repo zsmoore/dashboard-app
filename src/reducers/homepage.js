@@ -14,7 +14,9 @@ const homepage = (state = {}, action) => {
     case LOGOUT:
       return Object.assign({}, { ...state,
         user: action.payload.user,
-        loggedIn: false
+        loggedIn: false,
+        search: '',
+        recipes: []
       });
     case GET_USER:
       if(!action.payload.user) return state;

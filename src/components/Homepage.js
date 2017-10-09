@@ -24,16 +24,13 @@ class Homepage extends Component {
     this._select = this._select.bind(this);
   }
 
-  componentWillMount() {
-    this.props.findRecipes([]);
-  }
-
   _login(username, password) {
     this.setState({ selected: [] });
     let { data: { user } } = this.props;
     if (!user) user = { inventory: [] };
     user = Object.assign(user, { username, password });
     this.props.login(user);
+    this.props.findRecipes([]);
   }
 
   _logout(username, password) {
@@ -47,6 +44,7 @@ class Homepage extends Component {
     if (!user) user = { inventory: [] };
     user = Object.assign(user, { username, password, email })
     this.props.signup(user);
+    this.props.findRecipes([]);
   }
 
   _add(suggestion, selected) {
