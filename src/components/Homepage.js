@@ -47,21 +47,6 @@ class Homepage extends Component {
     this.props.findRecipes([]);
   }
 
-  _login(username, password) {
-    this.setState({ selected: [], inventory: [] });
-    this.props.login(username, password);
-  }
-
-  _logout(username, password) {
-    this.setState({ selected: [] });
-    this.props.logout();
-  }
-
-  _signup(username, password) {
-    const { inventory } = this.state;
-    this.props.signup({ username, password, inventory });
-  }
-
   _add(suggestion, selected) {
     if (!selected) return;
     let { data: { user, suggestions } } = this.props;
