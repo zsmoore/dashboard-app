@@ -20,7 +20,7 @@ class Command(BaseCommand):
         except:
             pass
 
-        apiKeys = ["1739339cd0f675afd13732a66d50b7b8", "39f04546d837b12ad25e4a6c29287088", "4c86af9e7883ecea4821ef5eea3a4cec"]
+        apiKeys = ["1739339cd0f675afd13732a66d50b7b8", "39f04546d837b12ad25e4a6c29287088", "4c86af9e7883ecea4821ef5eea3a4cec", "89ab6349ec0ff685cbc1ac7f5bb8469e"]
         unwantedWords = ["1", "2", "3", "3", "4", "5", "6", "7", "8", "9", "0", "/", "thawed", "package", "room", "temperature", "can", "bottle", "pinch", "dash", "slice", "ounce", "cup", "pound", "teaspoon", "tablespoon", "tsp", "tbsp", "diced", "ground",  "ripe"]
         parenRemover = re.compile(r'\(.+\)')
 
@@ -66,8 +66,9 @@ class Command(BaseCommand):
 
                     # Remove anything between parenthesis
                     m = parenRemover.match(i)
-                    if m!=None:
+                    while m!=None:
                         i = i.replace(m.group(),'')
+                        m = parenRemover.match(i)
 
                     # Remove anything after first comma
                     s = i.split(',')
@@ -76,6 +77,15 @@ class Command(BaseCommand):
                     # Remove anything after the first hyphen
                     s = i.split(',')
                     i = s[0]
+                    
+                    # Remove anything between '&' and ';'
+                    ampPos = i.find('&')
+                    while ampPos!=-1:
+                        semiColonPos = i.find(';')
+                        if semiColonPos!=-1:
+                            i = i[:ampPos] + i[semiColonPos+1:]
+                        else:
+                            break # Probably supposed to be there
 
                     # Remove anything not a noun
                     tokens = nltk.word_tokenize(i)
