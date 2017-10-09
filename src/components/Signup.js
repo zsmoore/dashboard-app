@@ -27,20 +27,23 @@ class Signup extends Component {
 
 	_signup() {
 		const { email, password, verify } = this.state;
-		if(password === verify){
-			this.props.signup(email, password);
-			this.props.onButtonClick('')
+		if(!email || !password || !verify) this.setState({ message: 'Not all fields were filled out.' }); 
+		else if(email.indexOf('@') < 0) this.setState({ message: 'Invalid email provided.' });
+		else if(password !== verify){
+			this.setState({ message: 'Passwords don\'t match.' });
 		} else {
-			this.setState({ message: 'Passwords don\'t match.' })
+			this.props.signup(email, password);
+			this.props.onButtonClick('');
 		}
 	}
 
   render() {
   	const { email, password, verify, message } = this.state;
+  	// closer={true} onClose={() => this.props.onButtonClick('')
     return (
-    	<Layer closer={true} onClose={() => this.props.onButtonClick('')}>
+    	<Layer>
       		<Box pad='medium'>
-      			<Heading strong={true} align='center'>Sign up!</Heading>
+      			<Heading strong={true} align='center'>Create an account!</Heading>
 	      		<Form>
 	  				<FormField label='Email'>
 	    				<TextInput value={email} onDOMChange={(event) => this._updateValue(event, 'email')}/>
@@ -62,9 +65,9 @@ class Signup extends Component {
             			/>
 	    			</FormField>
 				</Form>
-				<Label>{message}</Label>
+				<Label style={{ color: 'red' }}>{message}</Label>
 				<Box pad='medium' align='center' width='100%'>
-					<Button label='Sign Up' 
+					<Button label='Sign Up' style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white' }}
 						primary={true} onClick={() => this._signup()}
 						fill={true}
 					/>
