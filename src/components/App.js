@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import '../App.css';
 import '../../node_modules/grommet-css'
 import GrommetApp from 'grommet/components/App';

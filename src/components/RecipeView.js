@@ -14,21 +14,21 @@ class RecipeView extends Component {
   render() {
 	const { recipes } = this.props;
     return (
-			<Box className='recipe--view' full='horizontal'>
-				<Tiles selectable={false} flush={false}>
-					{recipes.map((recipe, i) => (
-						<Tile className='recipe--view--tile' key={i} 
-					 	  onClick={() => this.openRecipe(recipe.link)}
-						>
-							<Card thumbnail={recipe.picture}
-								heading={recipe.name}
-								label={recipe.label}
-								description={recipe.description}
-							/>
-					</Tile>
-					))}
-				</Tiles>
-			</Box>
+		<Box className='recipe--view' full='horizontal'>
+			<Tiles selectable={false} flush={false}>
+				{recipes.map((recipe, i) => (
+					<Tile className='recipe--view--tile' key={i} 
+				 	  onClick={() => this.openRecipe(recipe.link)}
+					>
+						<Card thumbnail={recipe.picture}
+							heading={recipe.name}
+							label={recipe.label}
+							description={recipe.description}
+						/>
+				</Tile>
+				))}
+			</Tiles>
+		</Box>
     );
   }
 }
