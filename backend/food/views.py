@@ -34,9 +34,11 @@ def search(request):
     try:
         item_ids = [int(i) for i in items['ingredient']]
 
+        food_items = FoodItem.objects.filter(id__in=item_ids).all()
+
         ingredients = Ingredient.objects.filter(food_item__id__in=item_ids).values_list('recipe_id', flat=True)
 
-        recipes = Recipe.objects.filter(ingredients__in=ingredients).all()
+        recipes = Recipe.objects.filter(id__in=ingredients).all()
 
     except ValueError:
         return JsonResponse({'response': 'error', 'message': 'Ingredients must be of type integer!'})

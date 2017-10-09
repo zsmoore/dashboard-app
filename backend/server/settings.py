@@ -27,10 +27,7 @@ DEBUG = os.getenv("DEBUG", "true").lower() != "false"
 
 DOCKER = os.getenv("DOCKER", "afadsgdagsdg").lower() == 'true' 
 
-if DEBUG:
-    ALLOWED_HOSTS = ["*"]
-else:
-    ALLOWED_HOSTS = ['api.whoshungry.io', '104.131.48.250']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -44,13 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
 
     # Custom apps
     'session',
     'food',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
