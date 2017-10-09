@@ -6,7 +6,7 @@ import RecipeView from './RecipeView';
 import Navbar from './NavBar';
 import Article from 'grommet/components/Article';
 import Box from 'grommet/components/Box';
-import { findRecipes, login, logout, signup, update, getSuggestions } from '../actions/homepage';
+import { findRecipes, login, logout, signup, update, getSuggestions, clearError, setPopup } from '../actions/homepage';
 
 class Homepage extends Component {
 
@@ -27,10 +27,7 @@ class Homepage extends Component {
   _login(username, password) {
     this.setState({ selected: [] });
     let { data: { user } } = this.props;
-    if (!user) user = { inventory: [] };
-    user = Object.assign(user, { username, password });
-    this.props.login(user);
-    this.props.findRecipes([]);
+    this.props.login({ username, password });
   }
 
   _logout(username, password) {
@@ -44,7 +41,6 @@ class Homepage extends Component {
     if (!user) user = { inventory: [] };
     user = Object.assign(user, { username, password, email })
     this.props.signup(user);
-    this.props.findRecipes([]);
   }
 
   _add(suggestion, selected) {
@@ -82,14 +78,20 @@ class Homepage extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { selected } = this.state;
-    let { recipes, user, search, suggestions, loggedIn} = this.props.data;
+    let { recipes, user, search, suggestions, loggedIn, message, currentPopup} = this.props.data;
     const inventory = user ? user.inventory : [];
     if (!recipes) recipes = [];
-    if(loggedIn === undefined) loggedIn = false;
+    if (loggedIn === undefined) loggedIn = false;
+    if (message === undefined) message = '';
+    if (currentPopup === undefined) currentPopup = '';
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
-        <Navbar loggedIn={loggedIn} user={user} login={this._login} logout={this._logout} signup={this._signup}/>
+        <Navbar clearError={this.props.clearError} message={message} loggedIn={loggedIn} user={user} 
+          login={this._login} logout={this._logout} signup={this._signup} currentPopup={currentPopup}
+          setPopup={this.props.setPopup}
+        />
         <Box flex={true} direction='row' responsive={false}>
           <Sidebar
             search={search || ''} suggestions={suggestions || []} getSuggestions={this._getSuggestions}
@@ -105,6 +107,8 @@ class Homepage extends Component {
 
 Homepage.propTypes = {
   data: PropTypes.shape({
+    currentPopup: PropTypes.string,
+    message: PropTypes.string,
     recipes: PropTypes.array,
     user: PropTypes.shape({
       username: PropTypes.string,
@@ -132,7 +136,9 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
   signup: (username, password, inventory) => dispatch(signup(username, password, inventory)),
   update: inventory => dispatch(update(inventory)),
-  getSuggestions: (inventory, search, suggest) => dispatch(getSuggestions(inventory, search, suggest))
+  getSuggestions: (inventory, search, suggest) => dispatch(getSuggestions(inventory, search, suggest)),
+  clearError: () => dispatch(clearError()),
+  setPopup: popup => dispatch(setPopup(popup))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

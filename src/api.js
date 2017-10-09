@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 
 export function hitApi(url, options) {
-  return fetch(url, options).then(res => res.json());    
+  console.log(url, options);
+  return fetch(url, options).then(res => res.json()).catch(error => console.log('error', error));    
 }

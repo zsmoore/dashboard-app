@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, LOGIN, LOGOUT } from '../actions'
+import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, LOGIN, LOGOUT, ERROR, SET_POPUP } from '../actions'
 
 const homepage = (state = {}, action) => {
   switch (action.type) {
@@ -9,7 +9,9 @@ const homepage = (state = {}, action) => {
     case LOGIN:
       return Object.assign({}, { ...state,
         user: action.payload.user,
-        loggedIn: true
+        loggedIn: true,
+        message: '',
+        currentPopup: ''
       });
     case LOGOUT:
       return Object.assign({}, { ...state,
@@ -27,6 +29,15 @@ const homepage = (state = {}, action) => {
       return Object.assign({}, { ...state,
         suggestions: action.payload.suggestions,
         search: action.payload.search
+      });
+    case ERROR:
+      return Object.assign({}, { ...state,
+        message: action.payload.message
+      });
+    case SET_POPUP:
+      return Object.assign({}, { ...state,
+        currentPopup: action.payload.currentPopup,
+        message: action.payload.message
       });
     default:
       return state
