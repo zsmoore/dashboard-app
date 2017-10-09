@@ -14,43 +14,46 @@ class Navbar extends Component {
   
 	constructor(props) {
     super(props);
-    this.state = {
-      showComponent: '',
-	};
-	this._onButtonClick = this._onButtonClick.bind(this);
+		this.showComponent = '';
+		this.check = false;
+
+		this._onButtonClick = this._onButtonClick.bind(this);
+		this._check = this._check.bind(this);
   }
 
-  _onButtonClick(value, type, change) {
-  	console.log('button click');
-    this.setState({ showComponent: value });
-	if (type) this.props.logout();
+	_check(v) {
+		this.check = v;
+	}
+
+  _onButtonClick(value) {
+		this.props.setPopup(value)
+		if (this.props.loggedIn) this.props.logout();
   }
 
   render() {
-  	const { showComponent } = this.state;
-  	const { user, loggedIn } = this.props; 
-  	let popup = '';
-  	// if (showComponent === 'login'){
-  	//  popup = <Login login={this.props.login} onButtonClick={this._onButtonClick}/>;
-  	// } else if(showComponent === 'signup'){
-  	if (!loggedIn) popup = <Signup signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
-	// }
-	let label, value, greeting;  
-	if(loggedIn) {
-	  label = 'Log Out';
-	  value = '';
-	  greeting = <Label margin='small' style={{ color:'white' }}>Hello, {user.username}!</Label>;
-	} else {
-	  label = 'Log In';
-	  value = 'login';
-	  greeting = '';
-	}
-	const button = (
-		<Button label={label} style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white', }}
-			onClick={() => this._onButtonClick(value, label === 'Log Out', false )}
-			primary={true}
-		/>
-	);
+  	let { setPopup, user, loggedIn, message, currentPopup } = this.props; 
+		let popup = '';
+  	if (currentPopup === 'login'){
+  	 popup = <Login setPopup={setPopup} message={message} login={this.props.login} onButtonClick={this._onButtonClick}/>;
+  	} else if(currentPopup === 'signup'){
+  	  popup = <Signup setPopup={setPopup} message={message} signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
+	  }
+		let label, value, greeting;  
+		if(loggedIn) {
+			label = 'Log Out';
+			value = '';
+			greeting = <Label margin='small' style={{ color:'white' }}>Hello, {user.username}!</Label>;
+		} else {
+			label = 'Log In';
+			value = 'login';
+			greeting = '';
+		}
+		const button = (
+			<Button label={label} style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white', }}
+				onClick={() => this._onButtonClick(value)}
+				primary={true}
+			/>
+		);
 
     return (
       <Header separator='bottom' style={{ backgroundImage: "url('img/header-bg.jpg')" }}>

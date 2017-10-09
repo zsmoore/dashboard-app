@@ -18,6 +18,7 @@ class Login extends Component {
     this.state = { email: '', password: '', message: ''};
     this._updateValue = this._updateValue.bind(this);
     this._submit = this._submit.bind(this);
+    this.check = false;
    }
 
   _updateValue(event, field) {
@@ -28,20 +29,22 @@ class Login extends Component {
   }
 
   _submit(email, password) {
-		if(!email || !password) return;
-    const i = email.indexOf('@'); 
-    if (i < 0) this.setState({ message: 'Invalid email provided.' });
-    else {
-      const username = email.substring(0, i);
-		  this.props.login(username, password);
-		  this.props.onButtonClick('');
+		if(!email || !password) this.setState({ message: 'Not all fields were filled out.' });
+    else {const i = email.indexOf('@'); 
+      if (i < 0) this.setState({ message: 'Invalid email provided.' });
+      else {
+        const username = email.substring(0, i);
+        this.props.login(username, password);
+      }
     }
   }
 
   render() {
-    const { email, password, message } = this.state;
+    const message = this.props.message || this.state.message;
+    const { email, password } = this.state;
+    const { setPopup } = this.props;
     return (
-    	<Layer closer={true} onClose={() => this.props.onButtonClick('')}>
+    	<Layer closer={true} onClose={() => setPopup('')}>
       	<Box pad='medium'>
             <Heading strong={true} align='center'>Hungry Already?</Heading>
             <Form>
@@ -66,7 +69,7 @@ class Login extends Component {
           </Box>
       </Box>
 	  		<Box pad={{horizontal: 'medium', vertical: 'small'}}>
-	  			<Anchor href='#' label='Sign up' onClick={() => this.props.onButtonClick('signup')}/>
+	  			<Anchor href='#' label='Sign up' onClick={() => setPopup('signup')}/>
 	  		</Box>
       	</Layer>
     );
