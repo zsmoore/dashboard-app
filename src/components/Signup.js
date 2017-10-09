@@ -8,24 +8,37 @@ import Form from 'grommet/components/Form';
 import TextInput from 'grommet/components/TextInput';
 import Heading from 'grommet/components/Heading';
 import Label from 'grommet/components/Label';
-
+/**
+ * Component for the sign in popup.
+ * @prop {string} message - the current error message to display
+ * @prop {func} signup - login function
+ * @prop {func} setPopup - sets the current popup
+ */
 class Signup extends Component {
 
   constructor(props) { 
-	super(props);
-	this.state = { email: '', password: '', verify: '', message: ''};
-	this._updateValue = this._updateValue.bind(this);
-	this._signup = this._signup.bind(this);
-	this.check = false;
+		super(props);
+		this.state = { email: '', password: '', verify: '', message: ''};
+		this._updateValue = this._updateValue.bind(this);
+		this._signup = this._signup.bind(this);
   }
 
+	/**
+	 * updates the given input value in the state
+	 * @param {object} event - object returned on keystroke of the following format: { target: { value } }
+	 * @param {string} field - the name of the field to update
+	 */
   _updateValue(event, field) {
 		const val = event.target.value;
 		const obj = {};
 		obj[field] = val;
 		this.setState(obj);
   }
-
+	/**
+	 * function called when the 'sign up' button is clicked.
+	 * Checks that fields are filled in and correct, then calls this.props.signup
+	 * to try to connect to the backend to create a new account
+	 */
   _signup() {
 		const { email, password, verify } = this.state;
 		if(!email || !password || !verify) this.setState({ message: 'Not all fields were filled out.' }); 
@@ -37,6 +50,9 @@ class Signup extends Component {
 		}
   }
 
+	/**
+	 * re renders the page when props or state are updated
+	 */
   render() {
 		const message = this.props.message || this.state.message;
 		const { email, password, verify } = this.state;

@@ -1,6 +1,15 @@
 import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, LOGIN, LOGOUT, ERROR, SET_POPUP } from './';
 import { hitApi } from '../api';
 
+//All redux actions are defined here
+
+/**
+ * Checks if the search string is at least 3 characters long. 
+ * If so, hits the back end to get valid inventory items beginning with the search string 
+ * and filters out items already in the inventory.
+ * @param {list} inventory - the current inventory
+ * @param {string} search  - the search string
+ */
 export function getSuggestions(inventory, search) {
   if(search.length > 3){
     const url = `https://api.whoshungry.io/food/autocomplete?partial=${search}`;
@@ -17,11 +26,20 @@ export function getSuggestions(inventory, search) {
   return { type: GET_SUGGESTIONS, payload: { suggestions: [], search } };
 }
 
+/**
+ * updates the user's inventory
+ * @param {object} u - the current user object 
+ * @param {list} inventory - the current inventory 
+ */
 export function update(u, inventory) {
   const user = Object.assign({}, u || {}, inventory);
   return { type: GET_USER, payload: { user } };
 } 
 
+/**
+ * Passes in a user to create an account for and sends it to the backend, and updates any error messages
+ * @param {object} user - the user object to sign up 
+ */
 export function signup(user) {
   const url = 'https://api.whoshungry.io/session/create-user'
   const options = { method: 'POST', body: JSON.stringify(user) };
@@ -34,19 +52,25 @@ export function signup(user) {
   });
 }
 
+/**
+ * sets the current popup layer to display
+ * @param {string} currentPopup - string representing the current popup to display
+ */
 export function setPopup(currentPopup) {
-  console.log('curr', currentPopup);
   return { type: SET_POPUP, payload: { currentPopup } };
 }
 
-export function clearError() {
-  return { type: ERROR, payload: { message: '' } };
-}
-
+/**
+ * logs the current user out
+ */
 export function logout() {
   return { type: LOGOUT, payload: { user: undefined } };
 }
 
+/**
+ * Takes in a user object and asks the backend for user auhentication
+ * @param {object} user - user object to authenticate
+ */
 export function login(user) {
   const url = 'https://api.whoshungry.io/api-token-auth/'
   console.log('user', user);
@@ -65,6 +89,10 @@ export function login(user) {
   });
 }
 
+/**
+ * Takes the selected ingredients and hits the back end to get recipes involving those ingredients
+ * @param {list} selected - list of selected ingredient objects
+ */
 export function findRecipes(selected) {
   let url;
   if (selected.length > 0) {

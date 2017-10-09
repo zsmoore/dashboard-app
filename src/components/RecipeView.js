@@ -7,11 +7,10 @@ import Box from 'grommet/components/Box';
 import Label from 'grommet/components/Label';
 
 class RecipeView extends Component {
-
-	openRecipe(URL) {
-		window.open(URL);
-	}
 	
+	/**
+	 * re renders the page when props or state are updated
+	 */
   render() {
 	const { recipes } = this.props;
     return (
@@ -19,7 +18,7 @@ class RecipeView extends Component {
 			<Tiles selectable={false} flush={false}>
 				{recipes.map((recipe, i) => (
 					<Tile className='recipe--view--tile' key={i} size='small'
-					  onClick={() => this.openRecipe(recipe.source)}
+					  onClick={() => window.open(recipe.source)}
 					>
 						<Card thumbnail={recipe.image_url} textSize='small' label={<Label size='small'>{recipe.title}</Label>} />
 				  </Tile>

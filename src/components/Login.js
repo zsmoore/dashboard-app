@@ -11,6 +11,12 @@ import TextInput from 'grommet/components/TextInput';
 import Heading from 'grommet/components/Heading';
 import Label from 'grommet/components/Label';
 
+/**
+ * Component for the sign in popup.
+ * @prop {string} message - the current error message to display
+ * @prop {func} login - login function
+ * @prop {func} setPopup - sets the current popup
+ */
 class Login extends Component {
   
   constructor(props) { 
@@ -21,6 +27,11 @@ class Login extends Component {
     this.check = false;
    }
 
+  /**
+	 * updates the given input value in the state
+	 * @param {object} event - object returned on keystroke of the following format: { target: { value } }
+	 * @param {string} field - the name of the field to update
+	 */
   _updateValue(event, field) {
     const val = event.target.value;
     const obj = {};
@@ -28,6 +39,11 @@ class Login extends Component {
     this.setState(obj);
   }
 
+  /**
+   * called when the 'login' button is clicked, checks that inputs are valid and sends to backend for validation
+   * @param {string} email 
+   * @param {string} password 
+   */
   _submit(email, password) {
 		if(!email || !password) this.setState({ message: 'Not all fields were filled out.' });
     else {const i = email.indexOf('@'); 
@@ -39,6 +55,9 @@ class Login extends Component {
     }
   }
 
+  /**
+	 * re renders the page when props or state are updated
+	 */
   render() {
     const message = this.props.message || this.state.message;
     const { email, password } = this.state;

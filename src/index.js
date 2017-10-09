@@ -5,6 +5,7 @@ import App from './components/App';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 
+// starts the app
 render(
   <Provider store={store}>
     <App />

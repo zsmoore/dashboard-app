@@ -10,33 +10,46 @@ import Label from 'grommet/components/Label';
 import MenuIcon from 'grommet/components/icons/base/Menu';
 import Menu from 'grommet/components/Menu';
 
+/**
+ * Component for navbar header.
+ * @prop message {string} - the current error message to display
+ * @prop loggedIn {bool} - Whether there is currently a user logged in
+ * @prop user {object} - the current user (or mock user if not logged in)
+ * @prop login {func} - login function
+ * @prop logout {func} - logout function
+ * @prop signup {func} - sign up function
+ * @prop currentPopup {string} - the current popup ('', 'login','signup') to display
+ * @prop setPopup {func} - sets the current popup
+ */
 class Navbar extends Component {
   
 	constructor(props) {
     super(props);
 		this.showComponent = '';
-		this.check = false;
 
 		this._onButtonClick = this._onButtonClick.bind(this);
 		this._check = this._check.bind(this);
   }
 
-	_check(v) {
-		this.check = v;
-	}
-
+	/**
+	 * function activated when the login or log out button are clicked
+	 * @param {string} value - the value to set the current popup to in the app props
+	 */
   _onButtonClick(value) {
 		this.props.setPopup(value)
 		if (this.props.loggedIn) this.props.logout();
   }
 
+	/**
+	 * re renders the page when props or state are updated
+	 */
   render() {
   	let { setPopup, user, loggedIn, message, currentPopup } = this.props; 
 		let popup = '';
   	if (currentPopup === 'login'){
-  	 popup = <Login setPopup={setPopup} message={message} login={this.props.login} onButtonClick={this._onButtonClick}/>;
+  	 popup = <Login setPopup={setPopup} message={message} login={this.props.login} />;
   	} else if(currentPopup === 'signup'){
-  	  popup = <Signup setPopup={setPopup} message={message} signup={this.props.signup} onButtonClick={this._onButtonClick}/>;
+  	  popup = <Signup setPopup={setPopup} message={message} signup={this.props.signup} />;
 	  }
 		let label, value, greeting;  
 		if(loggedIn) {
