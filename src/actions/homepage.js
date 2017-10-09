@@ -1,5 +1,5 @@
 import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, LOGIN, LOGOUT } from './';
-import { hitApi } from '../api'; 
+import { hitApi } from '../api';
 
 export function getSuggestions(inventory, search) {
   if(search.length > 3){
