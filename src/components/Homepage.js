@@ -13,7 +13,6 @@ class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
       selected: []
     };
     this._login = this._login.bind(this);
@@ -30,8 +29,11 @@ class Homepage extends Component {
   }
 
   _login(username, password) {
-    this.setState({ selected: [], loggedIn: true });
-    this.props.login(username, password);
+    this.setState({ selected: [] });
+    let { data: { user } } = this.props;
+    if (!user) user = { inventory: [] };
+    user = Object.assign(user, { username, password });
+    this.props.login(user);
   }
 
   _logout(username, password) {
@@ -40,8 +42,11 @@ class Homepage extends Component {
   }
 
   _signup(email, password) {
-    const username = email.substring(email.indexOf(0, '@'));
-    this.props.signup({ username, password, email });
+    const username = email.substring(0, email.indexOf('@'));
+    let { data: { user } } = this.props;
+    if (!user) user = { inventory: [] };
+    user = Object.assign(user, { username, password, email })
+    this.props.signup(user);
   }
 
   _add(suggestion, selected) {
@@ -79,10 +84,11 @@ class Homepage extends Component {
   }
 
   render() {
-    const { selected, loggedIn } = this.state;
-    let { recipes, user, search, suggestions } = this.props.data;
+    const { selected } = this.state;
+    let { recipes, user, search, suggestions, loggedIn} = this.props.data;
     const inventory = user ? user.inventory : [];
     if (!recipes) recipes = [];
+    if(loggedIn === undefined) loggedIn = false;
     return (
       <Article style={{height: '100vh', overflow: 'hidden'}}>
         <Navbar loggedIn={loggedIn} user={user} login={this._login} logout={this._logout} signup={this._signup}/>
@@ -124,7 +130,7 @@ const mapStateToProps = state => ({ data: state });
 
 const mapDispatchToProps = dispatch => ({
   findRecipes: selected => dispatch(findRecipes(selected)),
-  login: (username, password) => dispatch(login(username,password)),
+  login: (user) => dispatch(login(user)),
   logout: () => dispatch(logout()),
   signup: (username, password, inventory) => dispatch(signup(username, password, inventory)),
   update: inventory => dispatch(update(inventory)),

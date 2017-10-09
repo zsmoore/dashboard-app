@@ -47,7 +47,7 @@ class Sidebar extends Component {
           </List>
         </Box>
         <Footer  align='center' pad='small' margin='small'>
-          <Button label='Find Recipes' onClick={() => findRecipes(selected)} primary={true} />
+          <Button style={{ backgroundColor: '#FDC92B', borderColor: '#FDC92B'}} label='Find Recipes' onClick={() => findRecipes(selected)} primary={true} />
         </Footer>
       </Box>  
     );

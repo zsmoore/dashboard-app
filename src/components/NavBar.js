@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import Header from 'grommet/components/Header';
 import Box from 'grommet/components/Box';
-import Heading from 'grommet/components/Heading';
+import Headline from 'grommet/components/Headline';
 import Login from './Login';
 import Signup from './Signup';
 import Button from 'grommet/components/Button';
@@ -21,6 +21,7 @@ class Navbar extends Component {
   }
 
   _onButtonClick(value, type, change) {
+  	console.log('button click');
     this.setState({ showComponent: value });
 	if (type) this.props.logout();
   }
@@ -38,28 +39,31 @@ class Navbar extends Component {
 	if(loggedIn) {
 	  label = 'Log Out';
 	  value = '';
-	  greeting = <Label>Hello, {user.username}</Label>;
+	  greeting = <Label margin='small' style={{ color:'white' }}>Hello, {user.username}</Label>;
 	} else {
 	  label = 'Log In';
 	  value = 'login';
 	  greeting = '';
 	}
-
+	console.log(loggedIn);
 	const button = (
-		<Button label={label} style={{ backgroundColor: 'white', color: '#865CD6' }}
+		<Button label={label} style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white', }}
 			onClick={() => this._onButtonClick(value, label === 'Log Out', false )}
+			primary={true}
 		/>
 	);
 
     return (
-      <Header size='small' separator='bottom' style={{ backgroundColor: '#865CD6' }}>
-				<Box pad={{ horizontal: 'medium' }}>
-						<Heading style={{ fontSize: '60', color: 'white' }} margin='small'>Who's Hungry?</Heading>
+      <Header separator='bottom' style={{ backgroundImage: "url('img/header-bg.jpg')" }}>
+				<Box pad='small'>
+						<Headline style={{ color: '#FDC92B' }} margin='small'>Who's Hungry?</Headline>
 				</Box>
 				<Box flex={true} justify='end' direction='row' responsive={false}>
-				{greeting}
+				<Box>
+					{greeting}
+				</Box>
 				<Box pad={{ horizontal: 'medium' }}>
-					<Menu style={{ borderRadius: '5px' }} icon={<MenuIcon />} colorIndex='light-1' />
+					{button}
 				</Box>
 					{popup}
 				</Box>

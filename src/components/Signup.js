@@ -42,7 +42,7 @@ class Signup extends Component {
     return (
     	<Layer closer={true} onClose={() => this.props.onButtonClick('')}>
       		<Box pad='medium'>
-      			<Heading strong={true} align='center'>Sign up!</Heading>
+      			<Heading strong={true} align='center'>Create an account!</Heading>
 	      		<Form>
 	  				<FormField label='Email'>
 	    				<TextInput value={email} onDOMChange={(event) => this._updateValue(event, 'email')}/>
@@ -66,7 +66,7 @@ class Signup extends Component {
 				</Form>
 				<Label>{message}</Label>
 				<Box pad='medium' align='center' width='100%'>
-					<Button label='Sign Up' 
+					<Button label='Sign Up' style={{ borderColor: '#FDC92B', backgroundColor: '#FDC92B', color: 'white' }}
 						primary={true} onClick={() => this._signup()}
 						fill={true}
 					/>

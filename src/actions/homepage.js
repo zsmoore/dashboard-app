@@ -1,4 +1,4 @@
-import { GET_RECIPES, GET_USER, GET_SUGGESTIONS } from './';
+import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, LOGIN, LOGOUT } from './';
 import { hitApi } from '../api'; 
 
 export function getSuggestions(inventory, search) {
@@ -23,27 +23,30 @@ export function update(u, inventory) {
 } 
 
 export function signup(user) {
-  const url = 'https://api.whoshungry.io/session/create-user'
+  return({ type: 'LOGIN', payload: { user } });
+  /*const url = 'https://api.whoshungry.io/session/create-user'
   const options = JSON.stringify({ method: 'POST', body: user }); 
   return dispatch => hitApi(url, options).then((payload) => {
     console.log(payload);
     payload.inventory = user.inventory;
     dispatch({ type: GET_USER, payload });
-  });
+  });*/
 }
 
-export function logout(username, password) {
-  return { type: GET_USER, payload: { user: undefined } };
+export function logout() {
+  return { type: 'LOGOUT', payload: { user: undefined } };
 }
 
-export function login(username, password) {
-  const url = 'https://api.whoshungry.io/api-token-auth/'
+export function login(user) {
+  console.log('user', user);
+  return({ type: 'LOGIN', payload: { user } });
+  /*const url = 'https://api.whoshungry.io/api-token-auth/'
   const options = JSON.stringify({ method: 'POST', body: { username, password } }); 
   return dispatch => hitApi(url, options).then((payload) => {
     console.log(payload);
     payload.inventory = [];
     dispatch({ type: GET_USER, payload });
-  });
+  });*/
 }
 
 export function findRecipes(selected) {
@@ -54,6 +57,7 @@ export function findRecipes(selected) {
   } else url = 'https://api.whoshungry.io/food/search';
   const options = JSON.stringify({ method: 'GET' }); 
   return dispatch => hitApi(url, options).then((payload) => {
+    if (payload.recipes.length > 20) payload.recipes = payload.recipes.slice(0, 20);
     dispatch({ type: GET_RECIPES, payload });
   });
 }
