@@ -11,6 +11,9 @@ import Box from 'grommet/components/Box';
 import Footer from 'grommet/components/Footer';
 import Header from 'grommet/components/Header';
 
+/**
+ * pure function to get a list of inventory items
+ */
 function getListItems(inventory, selected, select, remove) {
   return inventory.map((ing, i) => (
     <ListItem key={i} pad='none'>
@@ -26,8 +29,23 @@ function getListItems(inventory, selected, select, remove) {
   ));
 }
 
+/**
+ * The component to render the inventory sidebar
+ * @prop {string} search - the string in the search bar 
+ * @prop {list} suggestions - the list of current suggestions to show on the search bar
+ * @prop {func} getSuggestions - sets suggestions to show
+ * @prop {list} inventory - list of current inventory items
+ * @prop {list} selected - list of slected inventory items
+ * @prop {func} add - adds an item to inventory
+ * @prop {func} select - adds an item to the selected items
+ * @prop {func} findRecipes - hits the backend and returns recipes using the selected items
+ * @prop {func} remove - removes items from the inventory
+ */
 class Sidebar extends Component {
   
+  /**
+	 * re renders the page when props or state are updated
+	 */
   render() {
     const { 
       inventory, selected, select, add, search,

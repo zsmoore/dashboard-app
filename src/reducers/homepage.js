@@ -1,5 +1,10 @@
 import { GET_RECIPES, GET_USER, GET_SUGGESTIONS, LOGIN, LOGOUT, ERROR, SET_POPUP } from '../actions'
 
+/**
+ * function called by each action, specifically when dispatch is called.
+ * Updates and returns the current state object.  Accepts an action object of the following format:
+ *  { type, payload }. 
+ */
 const homepage = (state = {}, action) => {
   switch (action.type) {
     case GET_RECIPES:
