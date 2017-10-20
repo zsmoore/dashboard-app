@@ -31,7 +31,8 @@ export function getSuggestions(inventory, search) {
  * @param {object} u - the current user object 
  * @param {list} inventory - the current inventory 
  */
-export function update(u, inventory) {
+export function update(u, inventory, food) {
+  //do the inventory stuff here
   const user = Object.assign({}, u || {}, inventory);
   return { type: GET_USER, payload: { user } };
 } 
@@ -73,16 +74,15 @@ export function logout() {
  */
 export function login(user) {
   const url = 'https://api.whoshungry.io/api-token-auth/'
-  console.log('user', user);
   const headers = {};
   headers['content-type'] = 'application/json';
   const options = { method: 'POST', headers, body: JSON.stringify(user) };
   return dispatch => hitApi(url, options).then((payload) => {
-    console.log('payload',payload);
     if (payload.non_field_errors) {
       dispatch({ type: ERROR, payload: { message: payload.non_field_errors[0] } });
       return;
     }
+    // do the inventory stuff here
     user = Object.assign(user, payload, { inventory: [] });
     dispatch({ type: LOGIN, payload: { user } });
     dispatch(findRecipes([]));

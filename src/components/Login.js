@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import LoginForm from 'grommet/components/LoginForm';
 import Layer from 'grommet/components/Layer';
 import Anchor from 'grommet/components/Anchor';
 import Box from 'grommet/components/Box';

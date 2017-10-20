@@ -7,8 +7,6 @@ import Login from './Login';
 import Signup from './Signup';
 import Button from 'grommet/components/Button';
 import Label from 'grommet/components/Label';
-import MenuIcon from 'grommet/components/icons/base/Menu';
-import Menu from 'grommet/components/Menu';
 
 /**
  * Component for navbar header.
@@ -30,18 +28,18 @@ class Navbar extends Component {
 		this._onButtonClick = this._onButtonClick.bind(this);
   }
 
-	/**
-	 * function activated when the login or log out button are clicked
-	 * @param {string} value - the value to set the current popup to in the app props
-	 */
+  /**
+   * function activated when the login or log out button are clicked
+   * @param {string} value - the value to set the current popup to in the app props
+  */
   _onButtonClick(value) {
 		this.props.setPopup(value)
 		if (this.props.loggedIn) this.props.logout();
   }
 
-	/**
-	 * re renders the page when props or state are updated
-	 */
+  /**
+   * re renders the page when props or state are updated
+   */
   render() {
   	let { setPopup, user, loggedIn, message, currentPopup } = this.props; 
 		let popup = '';
