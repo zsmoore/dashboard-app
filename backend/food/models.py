@@ -1,9 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class FoodItem(models.Model):
 
     name = models.CharField(max_length=256, default="", unique=True, db_index=True)
+
+    users = models.ManyToManyField(User, related_name="food_items")
 
     class Meta:
         db_table = "food_tbl"
