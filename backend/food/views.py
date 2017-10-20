@@ -106,6 +106,19 @@ def get_matching_foods(request):
 @api_view(['GET'])
 @permission_classes([])
 def persist_ingredient(request):
+    """Given a Food Item ID (preferably from autocomplete entry above), this will save or remove the ingredient from the user's persistence. 
+
+    **Route**: `/food/persist`
+
+    **Request Type**: `GET`
+
+    **Data Values**: `GET` parameter `ingredient` of ID of FoodItem to search for (which comes from autocomplete). No ingredients will return the currently persisted list.
+
+    **Example**: `api.whoshungry.io/food/persist?ingredient=3` or `api.whoshungry.io/food/persist`
+
+    **Response**:
+    * `items`: List of Food Item objects, each containing the keys `name` and `id`.
+    """
 
     get_params = dict(request.GET)
     user = request.user
