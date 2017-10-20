@@ -32,8 +32,14 @@ export function getSuggestions(inventory, search) {
  * @param {list} inventory - the current inventory 
  */
 export function update(u, inventory, food) {
-  //do the inventory stuff here
-  const user = Object.assign({}, u || {}, inventory);
+  if(u.token) {
+    console.log('saving ingredient', food);
+    const url = `https://api.whoshungry.io/food/persist?ingredient=${food.id}`;
+    const headers = { Authorization: `JWT ${u.token}` };
+    const options = { method: 'GET', headers };
+    hitApi(url, options);
+  }
+  const user = Object.assign(u, { inventory });
   return { type: GET_USER, payload: { user } };
 } 
 
@@ -73,19 +79,27 @@ export function logout() {
  * @param {object} user - user object to authenticate
  */
 export function login(user) {
-  const url = 'https://api.whoshungry.io/api-token-auth/'
-  const headers = {};
+  let url = 'https://api.whoshungry.io/api-token-auth/'
+  let headers = {};
   headers['content-type'] = 'application/json';
-  const options = { method: 'POST', headers, body: JSON.stringify(user) };
+  let options = { method: 'POST', headers, body: JSON.stringify(user) };
   return dispatch => hitApi(url, options).then((payload) => {
     if (payload.non_field_errors) {
       dispatch({ type: ERROR, payload: { message: payload.non_field_errors[0] } });
       return;
     }
     // do the inventory stuff here
-    user = Object.assign(user, payload, { inventory: [] });
-    dispatch({ type: LOGIN, payload: { user } });
-    dispatch(findRecipes([]));
+    user = Object.assign(user, payload);
+    console.log('token', `|JWT ${user.token}|`);
+    url = `https://api.whoshungry.io/food/persist`;
+    headers = { Authorization: `JWT ${user.token}` };
+    options = { method: 'GET', headers };
+    hitApi(url, options).then( (payload) => {
+      console.log('login', payload);
+      dispatch(findRecipes([]));
+      user = Object.assign(user, { inventory: payload.items } );
+      dispatch({ type: LOGIN, payload: { user } });
+    });
   });
 }
 
