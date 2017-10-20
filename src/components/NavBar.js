@@ -28,7 +28,6 @@ class Navbar extends Component {
 		this.showComponent = '';
 
 		this._onButtonClick = this._onButtonClick.bind(this);
-		this._check = this._check.bind(this);
   }
 
 	/**

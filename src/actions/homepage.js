@@ -11,7 +11,7 @@ import { hitApi } from '../api';
  * @param {string} search  - the search string
  */
 export function getSuggestions(inventory, search) {
-  if(search.length > 3){
+  if(search.length > 2) {
     const url = `https://api.whoshungry.io/food/autocomplete?partial=${search}`;
     const options = { method: 'GET' }; 
     return dispatch => hitApi(url, options).then((payload) => {
