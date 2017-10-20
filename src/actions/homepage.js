@@ -3,6 +3,21 @@ import { hitApi } from '../api';
 
 //All redux actions are defined here
 
+function retry(user, inventory, food) {
+  let url = 'https://api.whoshungry.io/api-token-auth/'
+  console.log('retrying');
+  let headers = {};
+  headers['content-type'] = 'application/json';
+  let options = { method: 'POST', headers, body: JSON.stringify(user) };
+  return dispatch => hitApi(url, options).then((payload) => {
+    if (payload.non_field_errors) {
+      dispatch({ type: ERROR, payload: { message: payload.non_field_errors[0] } });
+      return;
+    }
+    return update(user, inventory, food)
+  });
+}
+
 /**
  * Checks if the search string is at least 3 characters long. 
  * If so, hits the back end to get valid inventory items beginning with the search string 
@@ -20,7 +35,7 @@ export function getSuggestions(inventory, search) {
         return search.toLowerCase() === food.name.substring(0, search.length).toLowerCase()
           && inventory.findIndex(f => f.name === food.name) < 0;
       });
-      dispatch({ type: GET_SUGGESTIONS, payload  });
+      dispatch({ type: GET_SUGGESTIONS, payload });
     });
   }
   return { type: GET_SUGGESTIONS, payload: { suggestions: [], search } };
@@ -37,7 +52,11 @@ export function update(u, inventory, food) {
     const url = `https://api.whoshungry.io/food/persist?ingredient=${food.id}`;
     const headers = { Authorization: `JWT ${u.token}` };
     const options = { method: 'GET', headers };
-    hitApi(url, options);
+    hitApi(url, options).then((payload) =>{
+      if(payload.detail) {
+        return retry(u, inventory, food);
+      }
+    });
   }
   const user = Object.assign(u, { inventory });
   return { type: GET_USER, payload: { user } };
@@ -88,15 +107,14 @@ export function login(user) {
       dispatch({ type: ERROR, payload: { message: payload.non_field_errors[0] } });
       return;
     }
-    // do the inventory stuff here
     user = Object.assign(user, payload);
     console.log('token', `|JWT ${user.token}|`);
     url = `https://api.whoshungry.io/food/persist`;
     headers = { Authorization: `JWT ${user.token}` };
     options = { method: 'GET', headers };
     hitApi(url, options).then( (payload) => {
-      console.log('login', payload);
-      dispatch(findRecipes([]));
+      //TODO get 'top picks' relevant to the secific user
+      //dispatch(findRecipes([]));
       user = Object.assign(user, { inventory: payload.items } );
       dispatch({ type: LOGIN, payload: { user } });
     });
