@@ -123,6 +123,9 @@ def persist_ingredient(request):
     get_params = dict(request.GET)
     user = request.user
 
+    if not user.is_authenticated:
+        return JsonResponse({'response': 'error', 'message': 'Authorization Header needed! Refer to http://getblimp.github.io/django-rest-framework-jwt/#usage for usage.'})
+
     # If no ingredient provided, return the current user's list
     if 'ingredient' not in get_params:
         food_items = user.food_items.all()
