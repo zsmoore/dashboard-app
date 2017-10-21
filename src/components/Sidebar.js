@@ -53,7 +53,7 @@ class Sidebar extends Component {
     } = this.props;
     return (
       <Box style={{ width: '20%' }} separator='right'>
-        <Header justify='center' size='small'><Title>Ingredients</Title></Header>
+        <Header justify='center' size='small'><Title>Pantry</Title></Header>
         <Search
           inline={true} suggestions={suggestions.map(food => food.name)}
           onSelect={({ suggestion }, selected) => add(suggestion, selected)}

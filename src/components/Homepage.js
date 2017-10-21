@@ -35,7 +35,6 @@ class Homepage extends Component {
    */  
   _login(username, password) {
     this.setState({ selected: [] });
-    let { data: { user } } = this.props;
     this.props.login({ username, password });
   }
 
@@ -71,8 +70,9 @@ class Homepage extends Component {
     let { data: { user, suggestions } } = this.props;
     if (!user) user = { inventory: [] };
     const { inventory } = user;
-    inventory.unshift(suggestions.find(food => food.name === suggestion));
-    this.props.update(user, inventory);
+    const food = suggestions.find(food => food.name === suggestion)
+    inventory.unshift(food);
+    this.props.update(user, inventory, food);
     this.props.getSuggestions(inventory, '');
   }
 
@@ -98,8 +98,9 @@ class Homepage extends Component {
   _remove(index) {
     const { data: { user } } = this.props;
     const inventory = user ? user.inventory : [];
+    const food = inventory[index];
     inventory.splice(index, 1);
-    this.props.update(user, inventory);
+    this.props.update(user, inventory, food);
   }
 
   /**
@@ -116,7 +117,6 @@ class Homepage extends Component {
 	 * re renders the page when props or state are updated
 	 */
   render() {
-    console.log(this.props);
     const { selected } = this.state;
     let { recipes, user, search, suggestions, loggedIn, message, currentPopup} = this.props.data;
     const inventory = user ? user.inventory : [];
@@ -182,7 +182,7 @@ const mapDispatchToProps = dispatch => ({
   login: (user) => dispatch(login(user)),
   logout: () => dispatch(logout()),
   signup: (username, password, inventory) => dispatch(signup(username, password, inventory)),
-  update: inventory => dispatch(update(inventory)),
+  update: (user, inventory, food) => dispatch(update(user, inventory, food)),
   getSuggestions: (inventory, search, suggest) => dispatch(getSuggestions(inventory, search, suggest)),
   setPopup: popup => dispatch(setPopup(popup))
 });
