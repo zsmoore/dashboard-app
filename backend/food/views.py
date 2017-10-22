@@ -101,4 +101,58 @@ def get_matching_foods(request):
 
 
     return JsonResponse({'response': 'error', 'message': 'GET parameter \'partial\' is required!'})
+
+
+@api_view(['GET'])
+@permission_classes([])
+def persist_ingredient(request):
+    """Given a Food Item ID (preferably from autocomplete entry above), this will save or remove the ingredient from the user's persistence. 
+
+    **Route**: `/food/persist`
+
+    **Request Type**: `GET`
+
+    **Data Values**: `GET` parameter `ingredient` of ID of FoodItem to search for (which comes from autocomplete). No ingredients will return the currently persisted list.
+
+    **Example**: `api.whoshungry.io/food/persist?ingredient=3` or `api.whoshungry.io/food/persist`
+
+    **Response**:
+    * `items`: List of Food Item objects, each containing the keys `name` and `id`.
+    """
+
+    get_params = dict(request.GET)
+    user = request.user
+
+    if not user.is_authenticated:
+        return JsonResponse({'response': 'error', 'message': 'Authorization Header needed! Refer to http://getblimp.github.io/django-rest-framework-jwt/#usage for usage.'})
+
+    # If no ingredient provided, return the current user's list
+    if 'ingredient' not in get_params:
+        food_items = user.food_items.all()
+        serializer = serializers.FoodItemSerializer(food_items, many=True)
+        return JsonResponse({'response': 'ok', 'items': serializer.data})
+
+    try:
+        food_item = FoodItem.objects.filter(
+            id=int(get_params['ingredient'][0])
+        ).first()
+    except Exception as er:
+        return JsonResponse({'response': 'error', 'message': 'Could not find ingredient.'})
+
+    if not food_item:
+        return JsonResponse({'response': 'error', 'message': 'Could not find ingredient.'})
+
+    # Add or remove ingredient
+    if user in food_item.users.all():
+        food_item.users.remove(user)
+    else:
+        food_item.users.add(user)
+
+    food_item.save()
+
+    return JsonResponse({'response': 'ok', 'message': 'Ingredients Updated!'})
+
+
+    
+
     
