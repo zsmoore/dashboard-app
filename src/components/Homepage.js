@@ -28,6 +28,10 @@ class Homepage extends Component {
     this._select = this._select.bind(this);
   }
 
+  componentWillMount() {
+    this.props.findRecipes([]);
+  }
+
   /**
    * function passed into navbar for login
    * @param {string} username - username to login in with
@@ -42,7 +46,8 @@ class Homepage extends Component {
    * function passed into navbar for logging out
    */
   _logout() {
-    this.setState({ selected: [], loggedIn: false });
+    this.setState({ selected: [] });
+    this.props.findRecipes([]);
     this.props.logout();
   }
 
