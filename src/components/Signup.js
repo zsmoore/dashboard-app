@@ -42,9 +42,15 @@ class Signup extends Component {
   _signup() {
 		const { email, password, verify } = this.state;
 		if(!email || !password || !verify) this.setState({ message: 'Not all fields were filled out.' }); 
-		else if(email.indexOf('@') < 0) this.setState({ message: 'Invalid email provided.' });
-		else if(password !== verify){
-				this.setState({ message: 'Passwords don\'t match.' });
+		else if(email.indexOf('@') < 0 
+			|| email.indexOf('.') < 0 
+            		|| email.lastIndexOf('.') < email.indexOf('@') 
+			|| email.lastIndexOf('.') === email.length - 1) {
+			this.setState({ message: 'Invalid email provided.' });
+		} else if (password.length < 5) {
+			this.setState({ message: 'Password length must be atleast 5 characters.' });
+		} else if(password !== verify){
+			this.setState({ message: 'Passwords don\'t match.' });
 		} else {
 			this.props.signup(email, password);
 		}
